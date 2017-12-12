@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2008
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHotel.Registration.Web", "SmartHotel.Registration\SmartHotel.Registration.Web.csproj", "{7DE59C01-0994-4315-B846-1BB8F322D495}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0CCB6791-5392-4231-BD06-154C64F7BD51} = {0CCB6791-5392-4231-BD06-154C64F7BD51}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHotel.Registration.Wcf", "SmartHotel.Registration.Wcf\SmartHotel.Registration.Wcf.csproj", "{0CCB6791-5392-4231-BD06-154C64F7BD51}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7DE59C01-0994-4315-B846-1BB8F322D495}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DE59C01-0994-4315-B846-1BB8F322D495}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DE59C01-0994-4315-B846-1BB8F322D495}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7DE59C01-0994-4315-B846-1BB8F322D495}.Debug|x64.Build.0 = Debug|Any CPU
+		{7DE59C01-0994-4315-B846-1BB8F322D495}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DE59C01-0994-4315-B846-1BB8F322D495}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DE59C01-0994-4315-B846-1BB8F322D495}.Release|x64.ActiveCfg = Release|Any CPU
+		{7DE59C01-0994-4315-B846-1BB8F322D495}.Release|x64.Build.0 = Release|Any CPU
+		{0CCB6791-5392-4231-BD06-154C64F7BD51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CCB6791-5392-4231-BD06-154C64F7BD51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CCB6791-5392-4231-BD06-154C64F7BD51}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0CCB6791-5392-4231-BD06-154C64F7BD51}.Debug|x64.Build.0 = Debug|Any CPU
+		{0CCB6791-5392-4231-BD06-154C64F7BD51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CCB6791-5392-4231-BD06-154C64F7BD51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CCB6791-5392-4231-BD06-154C64F7BD51}.Release|x64.ActiveCfg = Release|Any CPU
+		{0CCB6791-5392-4231-BD06-154C64F7BD51}.Release|x64.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14B53B2A-F46F-4C0D-8EDC-5B554C02F823}
+	EndGlobalSection
+EndGlobal

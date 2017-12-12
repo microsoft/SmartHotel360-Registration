@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="SmartOpinion.cs" />
+  </ItemGroup>
+  <ItemGroup>    
+    <PackageReference Include="Microsoft.Azure.CognitiveServices.Language">
+      <Version>1.0.0-preview</Version>
+    </PackageReference>    
+    <PackageReference Include="Microsoft.Azure.DocumentDB">
+      <Version>1.13.2</Version>
+    </PackageReference>    
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.DocumentDB" Version="1.1.0-beta4" />    
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.6" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="host.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="local.settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

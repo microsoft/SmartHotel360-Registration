@@ -1,0 +1,14 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "CosmosEndpoint": "",
+    "CosmosKey": "",
+    "CosmosDatabase": "Tweets",
+    "CosmosCollectionInput": "TweetsToAnalyze",
+    "CosmosCollectionOutput": "Tweets",
+    "AnalyticsAzureRegion": "",
+    "AnalyticsSubKey": "",
+    "AzureWebJobsStorage": "",
+    "AzureWebJobsDocumentDBConnectionString": ""
+  }
+}
