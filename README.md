@@ -18,17 +18,17 @@ In this document, you'll find an overview of the application, the repository and
 
 The application we are using in this sample is a hotel front-desk registration application. It's basic functionality is to check guest in and out.
 
-![SmartHotel Application Screen-shot](SmartHotelAppScreenshot.png)
+![SmartHotel Application Screen-shot](\media\SmartHotelAppScreenshot.png)
 
 To modernize the application, we first want to move it to Azure. First step, we will deploy it on to a set of VMs and later in to containers and host it in Azure Service Fabric.
 
 The application is the existing WebForms, WCF and SQL Database pieces, as depicted below. This is a very traditional three-tire application, using Entity Framework to integrate with the data in the SQL database, exposing it through a WCF service, which the WebForms application then interacts with.
 
-![SmartHotel Application Overview](SmartHotelAppOverview.png)
+![SmartHotel Application Overview](\media\SmartHotelAppOverview.png)
 
 The final step of the modernization is add functionality to the application to see what users are tweeting about their experiences at the hotel. We will implement the new sentiment analysis feature using Azure Service Fabric reliable Services, Azure functions, CosmosDB and Azure Cognitive Services Text Analytic API.
 
-![SmartHotel Modernized Application Overview](SmartHotelModernizedAppOverview.png)
+![SmartHotel Modernized Application Overview](\media\SmartHotelModernizedAppOverview.png)
 
 > In this sample we paste Tweets directly in to the CosmosDB document to simulate the feature. For a real set-up you can easily configure a Logic App to pick up tweets, and even do the sentiment analysis.
 
