@@ -9,7 +9,9 @@
     <Parameter Name="SmartHotel.RegistrationTypeEndpoint" DefaultValue="80" />
     <Parameter Name="SmartHotel.Registration.WcfTypeEndpoint" DefaultValue="2901" />
     <Parameter Name="SmartHotel.Registration.Wcf.Env.DefaultConnection" DefaultValue="" />
-    <Parameter Name="SmartHotel.Registration.Web.Env.WcfServiceUri" DefaultValue="" />
+    <Parameter Name="SmartHotel.Registration.Web.Env.WcfServiceUri" DefaultValue="http://wcf.registration:2901/Service.svc" />
+    <Parameter Name="SentimentIntegration.CosmosDBEndpoint" DefaultValue="" />
+    <Parameter Name="SentimentIntegration.CosmosDBAuthKey" DefaultValue="" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -17,6 +19,10 @@
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="SentimentIntegrationPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides />
+    <EnvironmentOverrides CodePackageRef="Code">
+      <EnvironmentVariable Name="CosmosDBEndpoint" Value="[SentimentIntegration.CosmosDBEndpoint]" />
+      <EnvironmentVariable Name="CosmosDBAuthKey" Value="[SentimentIntegration.CosmosDBAuthKey]" />
+    </EnvironmentOverrides>
   </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="SmartHotel.Registration.WcfPkg" ServiceManifestVersion="1.0.0" />
@@ -29,8 +35,8 @@
       <EnvironmentVariable Name="DefaultConnection" Value="[SmartHotel.Registration.Wcf.Env.DefaultConnection]" />
     </EnvironmentOverrides>
     <Policies>
-      <ServicePackageResourceGovernancePolicy CpuCores="1" MemoryInMB="1024" />
-      <ContainerHostPolicies CodePackageRef="Code" Isolation="[SmartHotel.Registration.Wcf_Isolation]">
+      <!--<ServicePackageResourceGovernancePolicy CpuCores="1" MemoryInMB="1024" />-->
+      <ContainerHostPolicies CodePackageRef="Code" Isolation="[SmartHotel.Registration.Wcf_Isolation]" ContainersRetentionCount="1">
         <PortBinding ContainerPort="80" EndpointRef="SmartHotel.Registration.WcfTypeEndpoint" />
       </ContainerHostPolicies>
     </Policies>
@@ -46,7 +52,6 @@
       <EnvironmentVariable Name="WcfServiceUri" Value="[SmartHotel.Registration.Web.Env.WcfServiceUri]" />
     </EnvironmentOverrides>
     <Policies>
-      <ServicePackageResourceGovernancePolicy CpuCores="1" MemoryInMB="1024" />
       <ContainerHostPolicies CodePackageRef="Code" Isolation="[SmartHotel.Registration_Isolation]">
         <PortBinding ContainerPort="80" EndpointRef="SmartHotel.RegistrationTypeEndpoint" />
       </ContainerHostPolicies>

@@ -25,27 +25,38 @@ namespace SmartHotel.Registration
                 RegistrationGrid.DataBind();
             }
 
-            using (var client = new HttpClient())
+            var hostIp = Environment.GetEnvironmentVariable("Fabric_NodeIPOrFQDN");
+            var fullAppName = Environment.GetEnvironmentVariable("Fabric_ApplicationName");
+            var appName = fullAppName.Substring(8);
+
+            if (!string.IsNullOrEmpty(hostIp))
             {
-                var hostIp = Environment.GetEnvironmentVariable("Fabric_NodeIPOrFQDN");
 
-                client.BaseAddress = new Uri($"http://{hostIp}:19081/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                var JsonSentiments = "";
-
-                HttpResponseMessage response = await client.GetAsync("SmartHotel.RegistrationApp/SentimentIntegration/api/values");
-                if (response.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    JsonSentiments = await response.Content.ReadAsStringAsync();
+                    client.BaseAddress = new Uri($"http://{hostIp}:19081/");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    var JsonSentiments = "";
+
+                    HttpResponseMessage response = await client.GetAsync($"{appName}/SentimentIntegration/api/values");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        JsonSentiments = await response.Content.ReadAsStringAsync();
+                    }
+
+                    var sentiments = JsonConvert.DeserializeObject<List<Tweet>>(JsonSentiments);
+
+                    var sentimentControl = Page.Master.FindControl("Sentiments") as HtmlGenericControl;
+                    sentimentControl.InnerText = sentiments.Count.ToString();
+
                 }
-
-                var sentiments = JsonConvert.DeserializeObject<List<Tweet>>(JsonSentiments);
-
+            }
+            else
+            {
                 var sentimentControl = Page.Master.FindControl("Sentiments") as HtmlGenericControl;
-                sentimentControl.InnerText = sentiments.Count.ToString();
-
+                sentimentControl.Visible = false;
             }
         }
 

@@ -6,5 +6,8 @@
     <Parameter Name="SmartHotel.Registration.Wcf_Isolation" Value="hyperv" />
     <Parameter Name="SmartHotel.Registration_InstanceCount" Value="1" />
     <Parameter Name="SmartHotel.Registration_Isolation" Value="hyperv" />
+    <Parameter Name="SmartHotel.Registration.Wcf.Env.DefaultConnection" Value="" />
+    <Parameter Name="SentimentIntegration.CosmosDBEndpoint" Value="" />
+    <Parameter Name="SentimentIntegration.CosmosDBAuthKey" Value="" />
   </Parameters>
 </Application>

@@ -12,6 +12,7 @@
 
     public static class DocumentDBRepository<T> where T : class
     {
+
         private static readonly string DatabaseId = "Tweets";
         private static readonly string CollectionId = "Tweets";
 
@@ -74,10 +75,17 @@
 
         public static void Initialize()
         {
-            //client = new DocumentClient(new Uri(ConfigurationManager.AppSettings["endpoint"]), ConfigurationManager.AppSettings["authKey"]);
-            client = new DocumentClient(new Uri(""), "");
-            CreateDatabaseIfNotExistsAsync().Wait();
-            CreateCollectionIfNotExistsAsync().Wait();
+            var docDBEndpoint = Environment.GetEnvironmentVariable("CosmosDBEndpoint");
+            var docDBAuthKey = Environment.GetEnvironmentVariable("CosmosDBAuthKey");
+
+            if (!string.IsNullOrEmpty(docDBEndpoint) && !string.IsNullOrEmpty(docDBAuthKey))
+            {
+                client = new DocumentClient(new Uri(docDBEndpoint), docDBAuthKey);
+            }
+            else
+            {
+                return;
+            }
         }
 
         private static async Task CreateDatabaseIfNotExistsAsync()
