@@ -188,11 +188,12 @@ This concludes the walk-through of deploying the modernized version of the Smart
 
 ## More info
 If you are looking for the other parts of the SmartHotel360 application. which was used throughout Connect(); 2017, please visit these repositories:
-* [SmartHotel360](https://github.com/Microsoft/SmartHotel360)
+* [SmartHotel360 ](https://github.com/Microsoft/SmartHotel360)
 * [Backend Services](https://github.com/Microsoft/SmartHotel360-Azure-backend)
 * [Public Website](https://github.com/Microsoft/SmartHotel360-public-web)
 * [Mobile Apps](https://github.com/Microsoft/SmartHotel360-mobile-desktop-apps)
 * [Sentiment Analysis](https://github.com/Microsoft/SmartHotel360-Sentiment-Analysis-App)
+* [Migrating Internal apps to Azure](https://github.com/Microsoft/SmartHotel360-internal-booking-apps)
 
 ## Contributing
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
