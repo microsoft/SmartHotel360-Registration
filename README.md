@@ -1,3 +1,18 @@
+# SmartHotel360
+During our **Connect(); 2017** event this year we presented beautiful app demos using Xamarin.
+
+We are happy to announce the release of SmartHotel360. This release intends to share a simplified version of SmartHotel360 reference sample apps used at Connect(); 2017 Keynotes. If you missed it, you can watch <a href="https://channel9.msdn.com/Events/Connect/2017/K100">Scott Guthrie’s Keynote: Journey to the Intelligent Cloud in Channel 9</a>.
+
+# SmartHotel360 Repos
+For this reference app scenario, we built several consumer and line-of-business apps and an Azure backend. You can find all SmartHotel360 repos in the following locations:
+
+* [SmartHotel360 ](https://github.com/Microsoft/SmartHotel360)
+* [Backend Services](https://github.com/Microsoft/SmartHotel360-Azure-backend)
+* [Public Website](https://github.com/Microsoft/SmartHotel360-public-web)
+* [Mobile Apps](https://github.com/Microsoft/SmartHotel360-mobile-desktop-apps)
+* [Sentiment Analysis](https://github.com/Microsoft/SmartHotel360-Sentiment-Analysis-App)
+* [Migrating Internal apps to Azure](https://github.com/Microsoft/SmartHotel360-internal-booking-apps)
+
 # SmartHotel - Internal Booking application
 
 During our Microsoft **Connect(); 2017** event we presented a story on how to take an existing ASP.NET Webforms and WCF service to Azure and build out the application with new cloud-native services.
@@ -185,15 +200,6 @@ First we nedd to setup a Service Fabric cluster in Azure to run our application.
 1. Click `Publish`
 
 This concludes the walk-through of deploying the modernized version of the SmartHotel Registration system to Azure.
-
-## More info
-If you are looking for the other parts of the SmartHotel360 application. which was used throughout Connect(); 2017, please visit these repositories:
-* [SmartHotel360 ](https://github.com/Microsoft/SmartHotel360)
-* [Backend Services](https://github.com/Microsoft/SmartHotel360-Azure-backend)
-* [Public Website](https://github.com/Microsoft/SmartHotel360-public-web)
-* [Mobile Apps](https://github.com/Microsoft/SmartHotel360-mobile-desktop-apps)
-* [Sentiment Analysis](https://github.com/Microsoft/SmartHotel360-Sentiment-Analysis-App)
-* [Migrating Internal apps to Azure](https://github.com/Microsoft/SmartHotel360-internal-booking-apps)
 
 ## Contributing
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
