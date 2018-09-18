@@ -14,6 +14,9 @@ namespace SmartHotel.Registration.Wcf.Data
         public string CustomerName { get; set; }
         public string Passport { get; set; }
         public string Address { get; set; }
+        public string CreditCard { get; set; }
+        public int Floor { get; set; }
+        public int RoomNumber { get; set; }
         public int Amount { get; set; }
         public int Total { get; set; }
     }

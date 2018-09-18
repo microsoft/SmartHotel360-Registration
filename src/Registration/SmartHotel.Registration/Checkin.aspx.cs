@@ -30,7 +30,28 @@ namespace SmartHotel.Registration
                 CustomerId.Value = checkin.CustomerId;
                 Address.Value = checkin.Address;
                 Amount.Value = checkin.Amount.ToString();
+                Floor.Value = checkin.Floor.ToString();
+                RoomNumber.Value = checkin.RoomNumber.ToString();
+                CreditCard.Attributes["value"] = checkin.CreditCard;
+                Total.Value = checkin.Total.ToString();
             }
+        }
+
+        protected void BackBtn_Click(Object sender, EventArgs e)
+        {
+            Response.Redirect($"Default.aspx");
+        }
+
+        protected void CheckinBtn_Click(Object sender, EventArgs e)
+        {
+            var registrationId = int.Parse(Request.QueryString["registration"]);
+
+            using (var client = ServiceClientFactory.NewServiceClient())
+            {
+                client.PostCheckin(registrationId);
+            }
+
+            Response.Redirect($"Default.aspx");
         }
     }
 }

@@ -24,6 +24,12 @@ namespace SmartHotel.Registration.Wcf.Models
         [DataMember]
         public string Address { get; set; }
         [DataMember]
+        public int Floor { get; set; }
+        [DataMember]
+        public int RoomNumber { get; set; }
+        [DataMember]
+        public string CreditCard { get; set; }
+        [DataMember]
         public int Amount { get; set; }
         [DataMember]
         public int Total { get; set; }

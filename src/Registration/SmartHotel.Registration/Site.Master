@@ -40,7 +40,7 @@
         </asp:ScriptManager>
 
         <div class="sh-navbar navbar navbar-fixed-top">
-            <div class="container-fluid">
+            <div class="container-fluid sh-navbar-border">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>

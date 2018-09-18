@@ -17,6 +17,7 @@ namespace SmartHotel.Registration.Wcf.Data
             var addressGenerator = new AddressGenerator();
             var userNameGenerator = new UserNameGenerator();
             var passportGenerator = new PassportGenerator();
+            var creditCardGenerator = new CreditCardGenerator();
 
             for (int i = 0; i < 60; i++)
             {
@@ -31,7 +32,11 @@ namespace SmartHotel.Registration.Wcf.Data
                     From = fromDate,
                     To = toDate,
                     Passport = passportGenerator.GetPassport(),
-                    Amount = random.Next(10, 40) * 100
+                    Amount = random.Next(10, 40) * 100,
+                    Total = random.Next(10, 40) * 500,
+                    CreditCard = creditCardGenerator.GetCreditCard(),
+                    Floor = random.Next(0, 10),
+                    RoomNumber = random.Next(1, 500)
                 });
             }
 

@@ -19,10 +19,12 @@ namespace SmartHotel.Registration.Wcf
             {
                 var checkins = db.Bookings
                 .Where(b => b.From == DateTime.Today)
+                .OrderByDescending(t => t.From)
                 .Select(BookingToCheckin);
 
                 var checkouts = db.Bookings
                     .Where(b => b.To == DateTime.Today)
+                    .OrderByDescending(t=> t.To)
                     .Select(BookingToCheckout);
 
                 var registrations = checkins.Concat(checkouts).OrderBy(r => r.Date);
@@ -64,6 +66,21 @@ namespace SmartHotel.Registration.Wcf
             }
         }
 
+        public void PostCheckin(int registrationId)
+        {
+            using (var db = new BookingsDbContext())
+            {
+                var booking = db.Bookings
+                .Where(b => b.Id == registrationId)
+                .First();
+
+                booking.From = DateTime.Today.AddHours(-1);
+                booking.To = DateTime.Today;
+
+                db.SaveChanges();
+            }
+        }
+
         public Models.Registration GetCheckout(int registrationId)
         {
             using (var db = new BookingsDbContext())
@@ -89,7 +106,10 @@ namespace SmartHotel.Registration.Wcf
                 Passport = booking.Passport,
                 Address = booking.Address,
                 Amount = booking.Amount,
-                Total = booking.Total
+                Total = booking.Total,
+                Floor = booking.Floor,
+                RoomNumber = booking.RoomNumber,
+                CreditCard = booking.CreditCard
             };
         }
 
@@ -105,7 +125,10 @@ namespace SmartHotel.Registration.Wcf
                 Passport = booking.Passport,
                 Address = booking.Address,
                 Amount = booking.Amount,
-                Total = booking.Total
+                Total = booking.Total,
+                Floor = booking.Floor,
+                RoomNumber = booking.RoomNumber,
+                CreditCard = booking.CreditCard
             };
         }
     }

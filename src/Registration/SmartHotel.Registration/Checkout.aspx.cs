@@ -22,13 +22,27 @@ namespace SmartHotel.Registration
 
             using (var client = ServiceClientFactory.NewServiceClient())
             {
-                var checkin = client.GetCheckout(registrationId);
-                CustomerName.Value = checkin.CustomerName;
-                Passport.Value = checkin.Passport;
-                CustomerId.Value = checkin.CustomerId;
-                Address.Value = checkin.Address;
-                Amount.Value = checkin.Amount.ToString();
+                var checkout = client.GetCheckout(registrationId);
+                CustomerName.Value = checkout.CustomerName;
+                Passport.Value = checkout.Passport;
+                CustomerId.Value = checkout.CustomerId;
+                Address.Value = checkout.Address;
+                Amount.Value = checkout.Amount.ToString();
+                Floor.Value = checkout.Floor.ToString();
+                RoomNumber.Value = checkout.RoomNumber.ToString();
+                CreditCard.Attributes["value"] = checkout.CreditCard;
+                Total.Value = checkout.Total.ToString();
             }
+        }
+
+        protected void BackBtn_Click(Object sender, EventArgs e)
+        {
+            Response.Redirect($"Default.aspx");
+        }
+
+        protected void CheckoutBtn_Click(Object sender, EventArgs e)
+        {
+           
         }
     }
 }

@@ -24,5 +24,8 @@ namespace SmartHotel.Registration.Wcf
 
         [OperationContract]
         Models.Registration GetCheckout(int registrationId);
+
+        [OperationContract]
+        void PostCheckin(int registrationId);
     }
 }

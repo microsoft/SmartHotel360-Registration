@@ -29,6 +29,9 @@ namespace SmartHotel.Registration.Data {
         private int AmountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CreditCardField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CustomerIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -38,10 +41,19 @@ namespace SmartHotel.Registration.Data {
         private System.DateTime DateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int FloorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PassportField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RoomNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TotalField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TypeField;
@@ -78,6 +90,19 @@ namespace SmartHotel.Registration.Data {
                 if ((this.AmountField.Equals(value) != true)) {
                     this.AmountField = value;
                     this.RaisePropertyChanged("Amount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CreditCard {
+            get {
+                return this.CreditCardField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreditCardField, value) != true)) {
+                    this.CreditCardField = value;
+                    this.RaisePropertyChanged("CreditCard");
                 }
             }
         }
@@ -122,6 +147,19 @@ namespace SmartHotel.Registration.Data {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Floor {
+            get {
+                return this.FloorField;
+            }
+            set {
+                if ((this.FloorField.Equals(value) != true)) {
+                    this.FloorField = value;
+                    this.RaisePropertyChanged("Floor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int Id {
             get {
                 return this.IdField;
@@ -143,6 +181,32 @@ namespace SmartHotel.Registration.Data {
                 if ((object.ReferenceEquals(this.PassportField, value) != true)) {
                     this.PassportField = value;
                     this.RaisePropertyChanged("Passport");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int RoomNumber {
+            get {
+                return this.RoomNumberField;
+            }
+            set {
+                if ((this.RoomNumberField.Equals(value) != true)) {
+                    this.RoomNumberField = value;
+                    this.RaisePropertyChanged("RoomNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Total {
+            get {
+                return this.TotalField;
+            }
+            set {
+                if ((this.TotalField.Equals(value) != true)) {
+                    this.TotalField = value;
+                    this.RaisePropertyChanged("Total");
                 }
             }
         }
@@ -274,6 +338,12 @@ namespace SmartHotel.Registration.Data {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckout", ReplyAction="http://tempuri.org/IService/GetCheckoutResponse")]
         System.Threading.Tasks.Task<SmartHotel.Registration.Data.Registration> GetCheckoutAsync(int registrationId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/PostCheckin", ReplyAction="http://tempuri.org/IService/PostCheckinResponse")]
+        void PostCheckin(int registrationId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/PostCheckin", ReplyAction="http://tempuri.org/IService/PostCheckinResponse")]
+        System.Threading.Tasks.Task PostCheckinAsync(int registrationId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -333,6 +403,14 @@ namespace SmartHotel.Registration.Data {
         
         public System.Threading.Tasks.Task<SmartHotel.Registration.Data.Registration> GetCheckoutAsync(int registrationId) {
             return base.Channel.GetCheckoutAsync(registrationId);
+        }
+        
+        public void PostCheckin(int registrationId) {
+            base.Channel.PostCheckin(registrationId);
+        }
+        
+        public System.Threading.Tasks.Task PostCheckinAsync(int registrationId) {
+            return base.Channel.PostCheckinAsync(registrationId);
         }
     }
 }
