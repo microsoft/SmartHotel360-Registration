@@ -15,5 +15,10 @@ namespace SmartHotel.Registration.Wcf.Data
 
         public DbSet<Booking> Bookings { get; set; }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Booking>().Property(x => x.RowVersion).IsRowVersion();
+        }
     }
 }

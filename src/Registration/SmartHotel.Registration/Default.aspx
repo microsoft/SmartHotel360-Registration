@@ -15,6 +15,7 @@
                 <asp:BoundField DataField="Passport" HeaderText="Passport" />
                 <asp:BoundField DataField="CustomerId" HeaderText="Customer Id" />
                 <asp:BoundField DataField="Address" HeaderText="Address" />
+                <asp:BoundField DataField="Culture" HeaderText="Language" />
                 <asp:BoundField DataField="Type" HeaderText="Operation" />
             </Columns>
         </asp:GridView>

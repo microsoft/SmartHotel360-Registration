@@ -27,5 +27,9 @@ namespace SmartHotel.Registration.Wcf.Models
         public int Amount { get; set; }
         [DataMember]
         public int Total { get; set; }
+        [DataMember]
+        public string Culture { get; set; }
+        [DataMember]
+        public string PhoneNumber { get; set; }
     }
 }
