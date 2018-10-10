@@ -78,7 +78,6 @@
     <Compile Include="Data\Generators\PassportGenerator.cs" />
     <Compile Include="Data\Generators\AddressGenerator.cs" />
     <Compile Include="Data\Generators\UserNameGenerator.cs" />
-    <Compile Include="Data\Generators\CultureGenerator.cs" />
     <Compile Include="Models\Registration.cs" />
     <Compile Include="Models\RegistrationDaySummary.cs" />
     <Compile Include="Service.svc.cs">

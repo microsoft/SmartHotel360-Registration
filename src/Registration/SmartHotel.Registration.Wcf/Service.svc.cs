@@ -7,7 +7,6 @@ using System.ServiceModel.Web;
 using System.Text;
 using SmartHotel.Registration.Wcf.Models;
 using SmartHotel.Registration.Wcf.Data;
-using SmartHotel.Registration.Wcf.Data.Generators;
 
 namespace SmartHotel.Registration.Wcf
 {
@@ -19,11 +18,14 @@ namespace SmartHotel.Registration.Wcf
             using (var db = new BookingsDbContext())
             {
                 var checkins = db.Bookings
-                    .Where(b => b.From == DateTime.Today ||
-                                b.To == DateTime.Today)
-                    .Select(ConvertToRegistration);
+                .Where(b => b.From == DateTime.Today)
+                .Select(BookingToCheckin);
 
-                var registrations = checkins.OrderBy(r => r.CustomerName);
+                var checkouts = db.Bookings
+                    .Where(b => b.To == DateTime.Today)
+                    .Select(BookingToCheckout);
+
+                var registrations = checkins.Concat(checkouts).OrderBy(r => r.Date);
                 return registrations.ToList();
             }
         }
@@ -33,7 +35,7 @@ namespace SmartHotel.Registration.Wcf
             using (var db = new BookingsDbContext())
             {
                 var totalCheckins = db.Bookings
-                    .Count(b => b.From == DateTime.Today);
+                .Count(b => b.From == DateTime.Today);
 
                 var totalCheckouts = db.Bookings
                     .Count(b => b.To == DateTime.Today);
@@ -53,9 +55,12 @@ namespace SmartHotel.Registration.Wcf
         {
             using (var db = new BookingsDbContext())
             {
-                db.Bookings.Single(b => b.Id == registrationId).Type = "CheckOut";
-                db.SaveChanges();
-                return ConvertToRegistration(db.Bookings.Single(b => b.Id == registrationId));
+                var checkin = db.Bookings
+                .Where(b => b.Id == registrationId)
+                .Select(BookingToCheckin)
+                .First();
+
+                return checkin;
             }
         }
 
@@ -63,27 +68,44 @@ namespace SmartHotel.Registration.Wcf
         {
             using (var db = new BookingsDbContext())
             {
-                db.Bookings.Single(b => b.Id == registrationId).Type = "CheckIn";
-                db.SaveChanges();
-                return ConvertToRegistration(db.Bookings.Single(b => b.Id == registrationId));
+                var checkout = db.Bookings
+                .Where(b => b.Id == registrationId)
+                .Select(BookingToCheckin)
+                .First();
+
+                return checkout;
             }
         }
 
-        private Models.Registration ConvertToRegistration(Booking booking)
+        private Models.Registration BookingToCheckin(Booking booking)
         {
             return new Models.Registration
             {
                 Id = booking.Id,
-                Type = booking.Type,
+                Type = "CheckIn",
+                Date = booking.From,
+                CustomerId = booking.CustomerId,
+                CustomerName = booking.CustomerName,
+                Passport = booking.Passport,
+                Address = booking.Address,
+                Amount = booking.Amount,
+                Total = booking.Total
+            };
+        }
+
+        private Models.Registration BookingToCheckout(Booking booking)
+        {
+            return new Models.Registration
+            {
+                Id = booking.Id,
+                Type = "CheckOut",
                 Date = booking.To,
                 CustomerId = booking.CustomerId,
                 CustomerName = booking.CustomerName,
                 Passport = booking.Passport,
                 Address = booking.Address,
                 Amount = booking.Amount,
-                Total = booking.Total,
-                Culture = CultureGenerator.GetLanguageFromCultureCode(booking.Culture),
-                PhoneNumber = booking.PhoneNumber
+                Total = booking.Total
             };
         }
     }

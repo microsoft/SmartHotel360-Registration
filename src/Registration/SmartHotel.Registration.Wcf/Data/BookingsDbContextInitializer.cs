@@ -17,11 +17,10 @@ namespace SmartHotel.Registration.Wcf.Data
             var addressGenerator = new AddressGenerator();
             var userNameGenerator = new UserNameGenerator();
             var passportGenerator = new PassportGenerator();
-            var cultureCodeGenerator = new CultureGenerator();
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 60; i++)
             {
-                var fromDate = DateTime.Today;
+                var fromDate = DateTime.Today.AddDays(random.Next(-2, 5));
                 var toDate = fromDate.AddDays(random.Next(1, 5));
 
                 context.Bookings.Add(new Booking
@@ -32,28 +31,7 @@ namespace SmartHotel.Registration.Wcf.Data
                     From = fromDate,
                     To = toDate,
                     Passport = passportGenerator.GetPassport(),
-                    Amount = random.Next(10, 40) * 100,
-                    Type = "CheckIn",
-                    Culture = cultureCodeGenerator.Cultures[random.Next(0, cultureCodeGenerator.Cultures.Count-1)]
-                });
-            }
-
-            for (int i = 0; i < 8; i++)
-            {
-                var fromDate = DateTime.Today.AddDays(random.Next(-5, -2));
-                var toDate = DateTime.Today;
-
-                context.Bookings.Add(new Booking
-                {
-                    CustomerId = "Cust-10" + i,
-                    CustomerName = userNameGenerator.GetName(),
-                    Address = addressGenerator.GetAddress(),
-                    From = fromDate,
-                    To = toDate,
-                    Passport = passportGenerator.GetPassport(),
-                    Amount = random.Next(10, 40) * 100,
-                    Type = "CheckOut",
-                    Culture = cultureCodeGenerator.Cultures[random.Next(0, cultureCodeGenerator.Cultures.Count - 1)]
+                    Amount = random.Next(10, 40) * 100
                 });
             }
 
