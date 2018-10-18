@@ -51,9 +51,12 @@ textarea {
 
 .sh-navbar {
     background: #FFFFFF;
-    border-bottom: 1px solid #E8E8E8;
-    padding: 2rem;
+    padding: 0 2rem 0;
     margin: 0 auto;
+}
+
+.sh-navbar-border {
+    border-bottom: 1px solid #E8E8E8;
 }
 
 .sh-brand {
@@ -76,6 +79,7 @@ textarea {
 #UpdatePanel label{
     color: rgba(37, 55, 72, .5);
     text-transform: uppercase;
+    font-size: 0.8em;
 }
 
 #UpdatePanel,
@@ -100,20 +104,33 @@ textarea {
 .sh-form {
     font-family: 'Poppins Regular';
     margin: 0 auto;
-    width: 80%;
+    width: 68.5%;
 }
 
 .sh-form_wrapper {
-    padding: 3rem;
+    padding: 2.5rem 5rem 4rem 4rem;
     border: 1px solid rgba(37, 55, 72, .2);
     border-radius: 5px;
     width: 100%;
+}
+
+.sh-form_wrapper .form-group {
+    margin-right: -10px;
 }
 
 .sh-input {
     font-family: 'Poppins Regular';
     height: 42px;
     max-width: 100%;
+    border-radius: 2px;
+    background-color: #ffffff;
+    border: solid 1px #d1dbdc;
+}
+
+.sh-close-btn {
+    background: url('../images/close-btn.png') center no-repeat;
+    margin-right: -28px;
+    margin-top: -23px;
 }
 
 .sh-input_option {
@@ -123,6 +140,9 @@ textarea {
 .sh-button {
     background-color: #BC4C1B;
     color: #FFFFFF;
+    width: 110px;
+    height: 32px;
+    border-radius: 2px;
 }
 
     .sh-button:hover {
@@ -133,7 +153,7 @@ textarea {
 
 /*Texts*/
 .sh-title {
-    font-size: 2rem;
+    font-size: 1.2em;
     line-height: 6rem;
 }
 
@@ -162,11 +182,17 @@ textarea {
             border: rgba(55, 141, 147, 0);
         }
 
-    #MainContent_RegistrationGrid td {
-        padding: 2rem;
-    }
+        #MainContent_RegistrationGrid td {
+            border-color: transparent;
+            padding: 2rem;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            color: #253748;
+        }
 
     #MainContent_RegistrationGrid th {
+        border-color: transparent;
         font-weight: normal;
         font-size: 14px;
         padding: 2rem;

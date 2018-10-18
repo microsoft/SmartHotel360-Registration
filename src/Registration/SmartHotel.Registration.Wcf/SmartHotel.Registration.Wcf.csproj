@@ -75,6 +75,7 @@
     <Compile Include="Data\Booking.cs" />
     <Compile Include="Data\BookingsDbContext.cs" />
     <Compile Include="Data\BookingsDbContextInitializer.cs" />
+    <Compile Include="Data\Generators\CreditCardGenerator.cs" />
     <Compile Include="Data\Generators\PassportGenerator.cs" />
     <Compile Include="Data\Generators\AddressGenerator.cs" />
     <Compile Include="Data\Generators\UserNameGenerator.cs" />

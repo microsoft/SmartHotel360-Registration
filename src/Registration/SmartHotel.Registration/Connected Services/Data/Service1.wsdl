@@ -31,6 +31,12 @@
   <wsdl:message name="IService_GetCheckout_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetCheckoutResponse" />
   </wsdl:message>
+  <wsdl:message name="IService_PostCheckin_InputMessage">
+    <wsdl:part name="parameters" element="tns:PostCheckin" />
+  </wsdl:message>
+  <wsdl:message name="IService_PostCheckin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PostCheckinResponse" />
+  </wsdl:message>
   <wsdl:portType name="IService">
     <wsdl:operation name="GetTodayRegistrations">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/GetTodayRegistrations" message="tns:IService_GetTodayRegistrations_InputMessage" />
@@ -47,6 +53,10 @@
     <wsdl:operation name="GetCheckout">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/GetCheckout" message="tns:IService_GetCheckout_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService/GetCheckoutResponse" message="tns:IService_GetCheckout_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PostCheckin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/PostCheckin" message="tns:IService_PostCheckin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/PostCheckinResponse" message="tns:IService_PostCheckin_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService" type="tns:IService">
@@ -80,6 +90,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetCheckout">
       <soap:operation soapAction="http://tempuri.org/IService/GetCheckout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostCheckin">
+      <soap:operation soapAction="http://tempuri.org/IService/PostCheckin" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -11,7 +11,7 @@
             <Columns>
                 <asp:BoundField DataField="Id" Visible="false" />
                 <asp:BoundField DataField="Type" Visible="false" />
-                <asp:BoundField DataField="CustomerName" HeaderText="Cutomer Name" />
+                <asp:BoundField DataField="CustomerName" HeaderText="Customer Name" />
                 <asp:BoundField DataField="Passport" HeaderText="Passport" />
                 <asp:BoundField DataField="CustomerId" HeaderText="Customer Id" />
                 <asp:BoundField DataField="Address" HeaderText="Address" />

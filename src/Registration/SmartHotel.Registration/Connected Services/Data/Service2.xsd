@@ -53,4 +53,16 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="PostCheckin">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="registrationId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PostCheckinResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

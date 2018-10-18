@@ -13,6 +13,15 @@ namespace SmartHotel.Registration {
     public partial class Checkin {
         
         /// <summary>
+        /// cancel_btn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button cancel_btn;
+        
+        /// <summary>
         /// CustomerName control.
         /// </summary>
         /// <remarks>
@@ -49,6 +58,15 @@ namespace SmartHotel.Registration {
         protected global::System.Web.UI.HtmlControls.HtmlInputText Address;
         
         /// <summary>
+        /// CreditCard control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox CreditCard;
+        
+        /// <summary>
         /// RoomNumber control.
         /// </summary>
         /// <remarks>
@@ -56,6 +74,15 @@ namespace SmartHotel.Registration {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText RoomNumber;
+        
+        /// <summary>
+        /// Floor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Floor;
         
         /// <summary>
         /// Amount control.
@@ -74,5 +101,14 @@ namespace SmartHotel.Registration {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText Total;
+        
+        /// <summary>
+        /// checkin_btn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button checkin_btn;
     }
 }

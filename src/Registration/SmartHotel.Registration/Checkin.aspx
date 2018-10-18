@@ -5,6 +5,7 @@
         <h2 class="sh-title">Customer Check In</h2>
         <div class="sh-form_wrapper">
             <div class="row">
+                <asp:Button ID="cancel_btn" class="sh-close-btn btn pull-right" runat="server" OnClick="BackBtn_Click"/>
                 <section class="col-sm-6 customer-information">
                     <span class="sh-subtitle">Customer's information</span>
                     <div class="form-group">
@@ -23,6 +24,10 @@
                         <label class="sh-label" for="Address">ADDRESS</label>
                         <input class="sh-input form-control" id="Address" type="text" runat="server" />
                     </div>
+                    <div class="form-group">
+                        <label class="sh-label" for="CreditCard">CREDIT CARD</label>
+                        <asp:TextBox ID="CreditCard" class="sh-input form-control" TextMode="Password" runat="server" disabled />
+                    </div>
                 </section>
                 <section class="col-sm-6 room-information">
                     <span class="sh-subtitle">Room's information</span>
@@ -38,6 +43,10 @@
                         <input class="sh-input form-control" id="RoomNumber" type="text" runat="server" />
                     </div>
                     <div class="form-group">
+                        <label class="sh-label" for="Floor">FLOOR</label>
+                        <input class="sh-input form-control" id="Floor" type="text" runat="server" />
+                    </div>
+                    <div class="form-group">
                         <label class="sh-label" for="Amount">AMOUNT</label>
                         <input class="sh-input form-control" id="Amount" type="text" runat="server" disabled />
                     </div>
@@ -45,7 +54,9 @@
                         <label class="sh-label" for="Total">TOTAL</label>
                         <input class="sh-input form-control" id="Total" type="text" runat="server" disabled />
                     </div>
-                    <button class="sh-button btn pull-right">CHECK IN</button>
+                    <div class="form-group">
+                        <asp:Button ID="checkin_btn" class="sh-button btn pull-right" runat="server" OnClick="CheckinBtn_Click" Text="CHECK IN"/>
+                    </div>                    
                 </section>
             </div>
         </div>
