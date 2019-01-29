@@ -1,212 +1,377 @@
 # SmartHotel360
-During our **Connect(); 2017** event this year we presented beautiful app demos using Xamarin.
 
-We are happy to announce the release of SmartHotel360. This release intends to share a simplified version of SmartHotel360 reference sample apps used at Connect(); 2017 Keynotes. If you missed it, you can watch <a href="https://channel9.msdn.com/Events/Connect/2017/K100">Scott Guthrieâ€™s Keynote: Journey to the Intelligent Cloud in Channel 9</a>.
+We are happy to announce the release of SmartHotel360. This release intends to share a simplified version of SmartHotel360 reference sample apps used at Connect(); 2017 Keynotes. If you missed it, you can watch <a href="https://channel9.msdn.com/Events/Connect/2017/K100">Scott Guthrie’s Keynote: Journey to the Intelligent Cloud in Channel 9</a>.
+
+We updated the code for this repository to support Scott Hanselman's General Session from Ignite 2018, [An end-to-end tour of the Microsoft developer platform](https://myignite.techcommunity.microsoft.com/sessions/66696#ignite-html-anchor). 
 
 # SmartHotel360 Repos
 For this reference app scenario, we built several consumer and line-of-business apps and an Azure backend. You can find all SmartHotel360 repos in the following locations:
 
 * [SmartHotel360 ](https://github.com/Microsoft/SmartHotel360)
-* [IoT Demo](https://github.com/Microsoft/SmartHotel360-IoT)
-* [Backend Services (optimized for Kubernetes)](https://github.com/Microsoft/SmartHotel360-AKS-DevSpaces-Demo)
-* [Public Website](https://github.com/Microsoft/SmartHotel360-public-web)
-* [Pet Checker Serverless Function](https://github.com/Microsoft/SmartHotel360-PetCheckerFunction)
-* [Mobile Apps](https://github.com/Microsoft/SmartHotel360-mobile-desktop-apps)
-* [Sentiment Analysis](https://github.com/Microsoft/SmartHotel360-Sentiment-Analysis-App)
-* [Migrating Internal apps to Azure](https://github.com/Microsoft/SmartHotel360-internal-booking-apps)
-* [Original Backend Services](https://github.com/Microsoft/SmartHotel360-Azure-backend)
-* [Application Modernization](https://github.com/Microsoft/SmartHotel360-AppModernization)
-* [How Containers Enable Local Development](https://github.com/microsoft/SmartHotel360-ContainersForLocalDev)
+* [IoT](https://github.com/Microsoft/SmartHotel360-IoT)
+* [Backend](https://github.com/Microsoft/SmartHotel360-Backend)
+* [Website](https://github.com/Microsoft/SmartHotel360-Website)
+* [Mobile](https://github.com/Microsoft/SmartHotel360-Mobile)
+* [Sentiment Analysis](https://github.com/Microsoft/SmartHotel360-SentimentAnalysis)
+* [Registration](https://github.com/Microsoft/SmartHotel360-Registration)
 
-# SmartHotel - Internal Booking application
-
-During our Microsoft **Connect(); 2017** event we presented a story on how to take an existing ASP.NET Webforms and WCF service to Azure and build out the application with new cloud-native services.
-
-We are happy to announce the release of the SmartHotel Internal Booking application repository. This repository contains all the source code for you to browse over, or walk-through the modernization steps yourself.
-
-The steps we showed in the presentation were:
-
-1. Deploy the existing application to VMs in Azure
-2. Create docker containers for the two services and deploy them to an Azure Service Fabric cluster, and host the database in Azure SQL
-3. Extend the functionality using an Azure function to do sentiment analysis of Tweets from a CosmosDB database
-
-If you missed the presentation, you can watch <a href="https://channel9.msdn.com/events/Connect/2017/G100">Corey Sander's session: Application modernization with Microsoft Azure in Channel 9</a>. You'll also find a copy of the slides in case that interest you.
-
-In this document, you'll find an overview of the application, the repository and a walk-through of how to lift & shift and modernization steps of the code.
-
-## Application Overview
+# SmartHotel360 - Registration
 
 The application we are using in this sample is a hotel front-desk registration application. It's basic functionality is to check guest in and out.
 
-![SmartHotel Application Screen-shot](./media/SmartHotelAppScreenshot.png)
+<p align="center">
+        <img src="Documents/Images/image8.png"/>
+    </p>
 
-To modernize the application, we first want to move it to Azure. First step, we will deploy it on to a set of VMs and later in to containers and host it in Azure Service Fabric.
+# Getting Started 
 
-The application is the existing WebForms, WCF and SQL Database pieces, as depicted below. This is a very traditional three-tire application, using Entity Framework to integrate with the data in the SQL database, exposing it through a WCF service, which the WebForms application then interacts with.
+To modernize the application, it is followed a lift and shift approach to move it to Azure. To do so, we first need to containerize the application and later host it in Azure Service Fabric.
 
-![SmartHotel Application Overview](./media/SmartHotelAppOverview.png)
+The application is the existing WebForms, WCF and Azure SQL Database pieces, as depicted below. This is a very traditional three-tire application, using Entity Framework to integrate with the data in the Azure SQL database, exposing it through a WCF service, which the WebForms application then interacts with.
 
-The final step of the modernization is add functionality to the application to see what users are tweeting about their experiences at the hotel. We will implement the new sentiment analysis feature using Azure Service Fabric reliable Services, Azure functions, CosmosDB and Azure Cognitive Services Text Analytic API.
+   <p align="center">
+        <img src="Documents/Images/arch-overview-1.PNG"/>
+    </p>
 
-![SmartHotel Modernized Application Overview](./media/SmartHotelModernizedAppOverview.png)
+The final step of the modernization is to add a Service Fabric Stateful service to store registration information that can later be retrieved by the WebForms app to show different registration KPIs. Data is stored using SF Reliable Collections and distributed in different service partitions.
 
-> In this sample we paste Tweets directly in to the CosmosDB document to simulate the feature. For a real set-up you can easily configure a Logic App to pick up tweets, and even do the sentiment analysis.
+  <p align="center">
+        <img src="Documents/Images/arch-overview-2.png"/>
+    </p>
 
-## SmartHotel360 Internal Booking Apps repository overview
-The **src** folder of this repository contains the following:
+## Key Takeaways
 
-- Registration
-    - The original application and the starting point for the tutorial.
-- Registration-modernized
-    - This is the final modernized application.
-- Function
-    - This folder contains the Function project, which is part of the final modernized solution.
+The key takeaways of this demo are:
+* Lift and shift Full Framework applications to Azure.
+* Create Service Fabric Stateful Reliable Services that interact with Guest Full Framework apps.
+* Debug apps and services locally with Service Fabric SDK.
 
-Over time we will be adding more walk-throughs of the solution to this repository, to demostrate the full end-to-end migration.
+## Demo Scenario
 
-In this document, you will find a walk-through of:
-- Running the modernized solution locally
-- Deploying and connecting to CosmosDB in Azure
-- Deploying the application to an Azure Service Fabric Cluster
+Deploy lift and shift full framework apps locally
+* Illustrates how easy it is to deploy and debug apps in Service Fabric locally
 
-## Prerequisites
-To complete the walk-through, you need a developer workstation, which meets the following requirements:
-- Windows 10 or Windows Server 2016 - https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-get-started
-    - Note - At the time of writing (Feb 2018), debugging docker container in Service Fabric is only supported if you use Windows Server 2016 as your developer machine.
-- Visual Studio 2017 Community Edition - Version 15.5 - https://www.visualstudio.com/
-    - You need to have the Azure and .NET workload enabled
-- Git - https://git-scm.com/
-- Service Fabric SDK - 3.0 or never - https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-get-started
-- Docker CE (Windows 10) or Docker EE (Windows Server) - https://docs.docker.com/docker-for-windows/install/
-- Service Fabric Preview Tooling for 2017 - https://blogs.msdn.microsoft.com/azureservicefabric/2018/02/06/new-preview-tooling-for-visual-studio-2017/
-- An Azure subscription - https://azure.microsoft.com/en-us/free/
+Deploy lift and shift full framework apps to Azure
+* Instructs the steps to deploy apps to Azure Service Fabric
 
-> Note: To enable the full feature set of containers in Service Fabric on a local developer machine, you need to change a Service Fabric configuration. Open the file `C:\Program Files\Microsoft SDKs\Service Fabric\ClusterSetup\NonSecure\OneNode\ClusterManifestTemplate.json` and change the `iPAddress` of the nodes section, to the current IP of your computer.
-```json
-      "nodes": [
-    {
-      "nodeName": "_Node_0",
-      "iPAddress": "10.0.0.4",
-      "nodeTypeRef": "NodeType0",
-      "faultDomain": "fd:/0",
-      "upgradeDomain": "0"
-    }
-  ],
+Deploy stateful Reliable Service locally
+* Presents an scenario where a stateful service is deployed along with the lift and shift full framework apps and how easy is to debug these services.
+
+Deploy stateful Reliable Service to Azure
+* Shows the steps to deploy the stateful Reliable Service scenario to Azure Service Fabric.
+
+# Setup
+
+### Local Setup
+For the demo, a sandboxed Windows 10 virtual machine has been created in Azure with all the tools and SDKs preinstalled. Find RDP connection file at: **.\deploy\vm\SFDemo.rdp**
+Optionally, in case of setting up another environment these are the requirements: 
+*	Windows 10
+*	Visual Studio 2017 Community Edition - Version 15.5 - https://www.visualstudio.com/ 
+*	You need to have the Azure and .NET workload enabled
+*	Docker CE - https://store.docker.com/editions/community/docker-ce-desktop-windows
+*	Service Fabric SDK - 3.0 or never - https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-get-started
+*	Service Fabric Preview Tooling for 2017 - https://blogs.msdn.microsoft.com/azureservicefabric/2018/02/06/new-preview-tooling-for-visual-studio-2017/
+Additionally, due to a Windows 10 limitation with dns and containers in VMs, UDP offload checksum in the VM needs to be disabled. Find Instructions at: **.\docs\DNS.in.VMs.pdf**
+
+### Azure Setup
+
+# Deploy to Azure
+
+Execute the powershell script to create all the infrastructure necessary to deploy the applications to Service Fabric in Azure. The script is located at: **.\deploy\gen-sf-resources.ps1**
+Replace the values and execute the following command in a Powershell console:
 ```
+.\gen-sf-resources.ps1 -subscriptionId <subscriptionId> -resourceGroupName <resource group name> -vaultName <keyvault name> -vaultPwd <keyvault password> -clustername <cluster name> -clusterAdminUser <cluster admin name> -clusterAdminPwd <cluster admin password> -dbAdminUser <database username> -dbAdminPwd <database password> -location <resource location> -certPwd <certificate password>
+```
+Once the deployment is finished, the resources shown below should appear under your resource group in Azure Portal:
 
-## Getting started
-If you have not done so already, clone this repository to your dev machine: 
+<p align="center">
+    <img src="images/image1.png"/>
+</p>
 
-`git clone https://github.com/Microsoft/SmartHotel360-internal-booking-apps.git`
+## Exercise 1: Deploy lift and shift full framework apps locally
 
-The following sections will take your through deploying the full solution in Azure. You will be guided through the following:
+1.	Open visual studio 2017 as Administrator
+2.	Open the SmartHotel.Registration solution.
 
-1. Run the modernized Service Fabric application locally
-1. Deploy CosmosDB in Azure
-1. Deploy the Service Fabric application in Azure
-1. Deploy Cognitive Services API and the Azure Function in Azure
+    <p align="center">
+        <img src="Documents/Images/image3.png"/>
+    </p>
+    > In the solution explorer 4 projects are shown. 
+    The ApplicationModern  which contains all SF manifests.
+    The Registration.Wcf contains a containerized WCF service.
+    The Registration.Web contains a containerized Web Forms app.
+    The Registration.StoreKPIs contains a .Net Core stateful Reliable Service for storing registration KPIs in Reliable Collections. 
 
-## Run the modernized solution locally
-Let's start by running the modernized version of the application locally in containers hosted in Service Fabric. You will end up deploying three servces to Service Fabric:
-- The SmartHotel.Registration.Web WebForms app in a container
-- The SmartHotel.Registration.WCF WCF service in a containe
-- The SentimentIntegration ASP.NET Core WebAPI as a Reliable Service
+3.	Open the Local.1Node and Local.5Node xml file and set the DefaultConnection parameter with the database UserId and Password  previously used in the setup chapter
 
-At this point, we have mocked-out CosmosDB and have yet to build the sentiment analysis function. 
+    <p align="center">
+        <img src="Documents/Images/image4.png"/>
+    </p>
+    > These xml files configure the Service fabric settings when deploying to SF locally.
 
-1. Open Visual Studio 2017 as administrator, by right-clicking the Visual Studio icon
-1. Open the solution `src\Registration-modernized\SmartHotel.Registration.sln`
+4.	Click Start button
 
-> When opening the solution, Visual Studio will start pulling the required container images. You can stop this, by closing the cmd.exe window which opened.
+    <p align="center">
+        <img src="Documents/Images/image5.png"/>
+    </p>
+    > With F5 experience, Visual Studio will generate the docker images for each service and deploy the app to the local SF cluster.
 
-> The solution is configured to build containers using Windows Server 2016 and to run as hyper-v containers, for the widest range of support. For more information see here: https://docs.microsoft.com/en-us/virtualization/windowscontainers/deploy-containers/version-compatibility
+5.	Connect to Service Fabric Dashboard: http://localhost:19080/Explorer
 
-The application relies on a SQL database, which we need to provide for our local dev machine. Usually you would use localdb, but since the application will run in containers, we cannot rely on localdb. The easiest is to provide a SQL server using AzureSQL, as you can reuse this when moving the applciation to Azure. Follow these steps to setup an AzureSQL database: https://docs.microsoft.com/en-us/azure/sql-database/sql-database-get-started-portal.
+    <p align="center">
+        <img src="Documents/Images/image6.png"/>
+    </p>
+    > Verify that the application and 3 services have been deployed. 
+    Verify that the nodes, application and services are in healthy state in the Service Fabric dashboard (This might take a while).
 
-> For information about running SQL in a container see here: https://github.com/Microsoft/mssql-docker/tree/master/windows/mssql-server-windows-developer
+6.	Open the Default.aspx.cs file in the Web.Registration project and set a breakpoint.
 
-1. Open the file `ApplicationModern\ApplicationParameters\Local.1Node.xml` in the Solution Explorer
-1. Type the database connection string in the `Value` attribute of the `<Parameter Name="SmartHotel.Registration.Wcf.Env.DefaultConnection"  Value="" />` element. This will pass the connection string to the database as an environment parameter to the container, when you deploy the container to your local cluster.
-1. Press `F5` to start debugging the solution. At this point a few things need to happen.
-    1. The base container images for your containerized applications will be downloaded. This might take a while.
-    1. The Service Fabric applications will be build and a Service Fabric developer cluster will be setup on your computer.
-1. Once the application is up and running, Visual Studio will open the applicaiton in a browser.
-    - Visual Studio support debugging services even though they run in containers, so you should be able to step-through how the different services communicate.
-    - By clicking on the Sentiment link on the front page, the WebForms service will call out to the ASP.NET Core WebAPI to get sentiment data.
-1. To see the services deployed in Service Fabric, you can browse to Service Fabric Explorer http://localhost:19080
+7.	Go to the web browser and enter the url: http://localhost:5000
 
-Now that you've see how the application runs in containers and interact with a reliable service locally, let's go ahead and setup CosmosDB in Azure.
+    <p align="center">
+        <img src="Documents/Images/image7.png"/>
+    </p>
 
-## Deploy and connect to CosmosDB in Azure
-In this part we will create a CosmosDB database and connect our local application to this.
+    <p align="center">
+        <img src="Documents/Images/image8.png"/>
+    </p>
+    > Check that the Registration web app is shown in the browser and the breakpoint is hit in Visual Studio ready to debug.
+    The Web app shows a list of customer registrations. If so, it means that all services are up and running and the Web App is able to communicate with WCF service in SF cluster.
 
-> Azure CosmosDB also has a local emulator option: https://docs.microsoft.com/en-us/azure/cosmos-db/local-emulator
 
-1. Follow the steps described here to create a CosmosDB account in Azure using the SQL API: https://docs.microsoft.com/en-us/azure/cosmos-db/tutorial-develop-sql-api-dotnet#create-an-azure-cosmos-db-account
-1. Once the CosmosDB account has been set up, browse to the resource
-1. In the Getting started guide, choose `Open Data Explorer`
-1. In `Data Explorer` delete the existing `ToDoList` database and click `New Collecion`
-1. Use the following values:
-    - Database id: Tweets
-    - Collection id: Tweets
-    - Storage Capacity: Fixed (10 GB)
-1. Click `OK`
-1. Unfold the new databse and collection and choose `Documents`
-1. Click `New Document` and paste the following JSON in the document window
-    ```JSON
-        {
-                "id": "2ed5e734-8034-bf3a-ac85-705b7713d911",
-                "tweetId": 927750234331580911,
-                "tweetUrl": "https://twitter.com/status/927750237331580911",
-                "userName": "CoreySandersWA",
-                "userAlias": "@CoreySandersWA",
-                "userPictureUrl": "",
-                "text": "This is a tweet about #SmartHotel",
-                "language": "en",
-                "sentiment": 0.5,
-                "retweet_count": 1,
-                "followers": 500, 
-                "hashtags": [
-                    ""
-                ]
-        }
-    ```
-1. Click `Save`. You can add more sample data to the collection if you want to.
+## Exercise 2: Deploy lift and shift full framework apps to Azure
 
-Now that we have a CosmosDB in Azure, let's configure our application to connect to it.
+1.	Open the Cloud xml file and set the DefaultConnection parameter with the database UserId and Password  previously used in the setup chapter.
 
-1. In `Visual Studio`, Open the file `ApplicationModern\ApplicationParameters\Local.1Node.xml` in the Solution Explorer
-1. Fill in the value for the following two parameters
-    ```XML
-        <Parameter Name="SentimentIntegration.CosmosDBEndpoint" Value="[URI]" />
-        <Parameter Name="SentimentIntegration.CosmosDBAuthKey" Value="[Key]" />
-    ```
-    - The CosmosDBEndpoint being the URI and the CosmosDBAuthKey being on of the Keys. You can obtain both values form the Azure Portal.
-1. To rerun the application locally and see data from CosmosDB - press `F5`
+2.	Set the Registration_InstanceCount parameter to 3.
 
-When the applicaiton comes up, and you browse to the Sentiment page, you should now see the sentiment data from CosmosDB.
+    <p align="center">
+        <img src="Documents/Images/image9.png"/>
+    </p>
+    > This xml file configure the Service fabric settings when deploying to SF in Azure.
+    By setting up the InstanceCount parameters we are telling SF to scale the app to multiple instances during deployment.
 
-## Deploy the application to an Azure Service Fabric Cluster
-In this part of the walk-through we will deploy the application to a cluster in Azure.
+3.	Right click on the ApplicationModern SF project and select Publish option.
 
-First we nedd to setup a Service Fabric cluster in Azure to run our application.
-1. Follow the instructions here: https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-cluster-creation-via-portal to create a Service Fabric cluster in the Azure Portal
-1. We also need an Azure Container Registry to copy our containers to. Follow these steps to create an Azure Container Registry: https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal
-1. In `Visual Studio`, Open the file `ApplicationModern\ApplicationParameters\Cloud.xml` in the Solution Explorer. This file defines all the parameters we will use, when deploying the application to the cluster in Azure.
-    ```XML
-        <Parameter Name="SmartHotel.Registration.Wcf.Env.DefaultConnection" Value="[SQLConnectionString]" />
-        <Parameter Name="SentimentIntegration.CosmosDBEndpoint" Value="[URI]" />
-        <Parameter Name="SentimentIntegration.CosmosDBAuthKey" Value="[Key]" />
-    ```
-1. `Right-click` the `ApplicationModern` project and choose `Publish`
-1. If not signed-in, sign-in to Azure and choose your newly created cluster from the drop-down menu.
-1. Choose the Azure Container Registry you created
-1. Choose the Cloud.xml parameter file
-1. Click `Publish`
+    <p align="center">
+        <img src="Documents/Images/image10.png"/>
+    </p>
 
-This concludes the walk-through of deploying the modernized version of the SmartHotel Registration system to Azure.
+4.	Select the connection endpoint pointing to the Service Fabric you previously created in the setup chapter.
 
-## Contributing
+5.	Select the Azure Container Registry you previously created in the setup chapter. 
+
+    <p align="center">
+        <img src="Documents/Images/image11.png"/>
+    </p>
+    > When publishing, Visual Studio builds de docker images for each service and push them to the Container Registry. After that, it deploys the SF app to the cluster in Azure.
+
+6.	Go to Azure Portal https://portal.azure.com
+
+7.	Login and go to the resource group you used in the setup chapter.
+
+8.	Click the Service Fabric Resource and select the Explorer link.
+
+    <p align="center">
+        <img src="Documents/Images/image12.png"/>
+    </p>
+
+9.	When the browser warns about it is an insecure site. Continue and select the certificate when the browser asks to.
+
+    <p align="center">
+        <img src="Documents/Images/image13.png"/>
+    </p>
+
+10.	Go to the dashboard, select the SmartHotel.Registration Service under Applications.
+
+    <p align="center">
+        <img src="Documents/Images/image14.png"/>
+    </p>
+    > Verify that the application and 3 services have been deployed. Check that the nodes, application and services are in healthy state in the Service Fabric dashboard (This might take a while) and SmartHotel.Registration Service has 3 instances created
+
+
+11.	Go to the browser and enter your cluster dnsname
+
+12.	Refresh the browser multiple times
+
+    <p align="center">
+        <img src="Documents/Images/image15.png"/>
+    </p>
+    > Check that the Service Instance Id is changing depending on the instance that is processing the request.
+
+13.	Go to the dashboard, select the SmartHotel.Registration Service under Applications and click the right button.
+
+14.	Select Scale Service option and set a -1 value
+
+     <p align="center">
+        <img src="Documents/Images/image16.png"/>
+    </p>
+     > Change the number of instances from the dashboard. After a while, the service instances should be rescaled.
+
+
+## Exercise 3: Deploy stateful Reliable Service locally
+
+1.	Open visual studio 2017 as Administrator
+2.	Open the SmartHotel.Registration solution.
+
+    <p align="center">
+        <img src="Documents/Images/image17.png"/>
+    </p>
+
+    > In the solution explorer 4 projects are shown. 
+    The ApplicationModern  which contains all SF manifests.
+    The Registration.Wcf contains a containerized WCF service.
+    The Registration.Web contains a containerized Web Forms app.
+    The Registration.StoreKPIs contains a .Net Core stateful Reliable Service for storing registration KPIs in Reliable Collections. 
+
+3.	Open the Local.1Node and Local.5Node xml file 
+    > These xml files configure the Service fabric settings when deploying to SF locally.
+
+4.	Set the **DefaultConnection** parameter with the database **UserId** and **Password**  previously used in the setup chapter.
+
+5.	Set the **UseStoreKPIsStatefulService** parameter to **True**
+
+6.	Click Start button
+     <p align="center">
+        <img src="Documents/Images/image5.png"/>
+    </p>
+     > With F5 experience, Visual Studio will generate the docker images for each service and deploy the app to the local SF cluster.
+
+10.	Connect to Service Fabric Dashboard: http://localhost:19080/Explorer
+    <p align="center">
+        <img src="Documents/Images/image6.png"/>
+    </p>
+    > Verify that the application and 3 services have been deployed. Verify that the nodes, application and services are in healthy state in the Service Fabric dashboard (This might take a while).
+
+11.	Go to the dashboard, select the SmartHotel.Registration.StoreKPIs Service under.
+
+    <p align="center">
+        <img src="Documents/Images/image18.png"/>
+    </p>
+    > Verify that the stateful service and the 10 partitions are in Healthy state.
+
+12.	Open the ValuesController.cs file in the Registration.StoreKPIs project and set a breakpoint to the Get/Id endpoint.
+
+    <p align="center">
+        <img src="Documents/Images/image19.png"/>
+    </p>
+
+13.	Go to the web browser and enter the url: http://localhost:5000
+
+14.	Click Display KPI button
+
+    <p align="center">
+        <img src="Documents/Images/image20.png"/>
+    </p>
+    > The Display KPI button should appear. When clicking the button, it is redirected to the KPIs page where it is shown a chart with registration KPIs. 
+
+    <p align="center">
+        <img src="Documents/Images/image21.png"/>
+    </p>
+
+15.	Select a user from the Dropdownlist
+
+    <p align="center">
+        <img src="Documents/Images/image22.png"/>
+    </p>
+    > The breakpoint in the Registration.StoreKPIs service should be hit since the PKIs page retrieves the data from that stateful service. You can debug the service and check that the Reliable Collections where data is stored contains the registration KPIs for that specific user.
+
+    <p align="center">
+        <img src="Documents/Images/image23.png"/>
+    </p>
+
+
+## Exercise 4: Deploy stateful Reliable Service to Azure
+
+1.	Open the Cloud xml file and set the DefaultConnection parameter with the database UserId and Password  previously used in the setup chapter.
+
+2.	Set the UseStoreKPIsStatefulService parameter to True
+
+    <p align="center">
+        <img src="Documents/Images/image24.png"/>
+    </p>
+    > This xml file configure the Service fabric settings when deploying to SF in Azure.
+
+3.	Right click on the ApplicationModern SF project and select Publish option.
+
+    <p align="center">
+        <img src="Documents/Images/image10.png"/>
+    </p>
+
+4.	Select the connection endpoint pointing to the Service Fabric you previously created in the setup chapter.
+
+5.	Select the Azure Container Registry you previously created in the setup chapter. 
+
+    <p align="center">
+        <img src="Documents/Images/image11.png"/>
+    </p>
+    > When publishing, Visual Studio builds de docker images for each service and push them to the Container Registry. After that, it deploys the SF app to the cluster in Azure.
+
+6.	Go to Azure Portal https://portal.azure.com
+
+7.	Login and go to the resource group you used in the setup chapter.
+
+8.	Click the Service Fabric Resource and select the Explorer link.
+
+9.	When the browser warns about it is an insecure site. Continue and select the certificate when the browser asks to.
+
+10.	Go to the dashboard, select the SmartHotel.Registration.StoreKPIs Service under Applications.
+
+    <p align="center">
+        <img src="Documents/Images/image12.png"/>
+    </p>
+    > Verify that the application and 3 services have been deployed. Check that the nodes, application and services are in healthy state in the Service Fabric dashboard and SmartHotel.Registration Service has 3 instances created (This might take a while).
+
+    <p align="center">
+        <img src="Documents/Images/image13.png"/>
+    </p>
+
+    <p align="center">
+        <img src="Documents/Images/image18.png"/>
+    </p>
+    > Verify that the Registration.StoreKPIs  stateful service and the 10 partitions are in Healthy state.
+
+11.	Go to the browser and enter your cluster dnsname
+
+12.	Click Display KPI button
+
+    <p align="center">
+        <img src="Documents/Images/image25.png"/>
+    </p>
+    > The Display KPI button should appear. When clicking the button, it is redirected to the KPIs page where it is shown a chart with registration KPIs. 
+
+    <p align="center">
+        <img src="Documents/Images/image21.png"/>
+    </p>
+
+13.	Click Back button to return to the main page.
+
+14.	Click Register button
+
+15.	Register a new reservation
+
+    <p align="center">
+        <img src="Documents/Images/image26.png"/>
+    </p>
+    > Registers a new reservation and it is redirected to the main page.
+
+16.	Click Display KPI button
+
+    > The page shows the KPIs of all the customer registrations. This data is recollected from the stateful Register.StoreKPI service.
+
+17.	Select the new created customer in the dropdownlist
+
+    <p align="center">
+        <img src="Documents/Images/image27.png"/>
+    </p>
+    > The new customer should appear in the list and show its KPIs
+
+# Summary
+
+Service Fabric allows us to easily lift and shift Full Framework applications and bring them to Azure providing all the benefits of the cloud such as reliability and scalability. Furthermore, Service Fabric tools helps us to deploy and debug the apps and services locally. 
+
+# Contributing
+
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
 the rights to use your contribution. For details, visit https://cla.microsoft.com.

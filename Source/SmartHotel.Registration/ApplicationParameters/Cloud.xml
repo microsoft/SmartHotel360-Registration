@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="fabric:/Application" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <Parameters>
+    <Parameter Name="SmartHotel.Registration.StoreKPIs_PartitionCount" Value="10" />
+    <Parameter Name="SmartHotel.Registration.StoreKPIs_MinReplicaSetSize" Value="1" />
+    <Parameter Name="SmartHotel.Registration.StoreKPIs_TargetReplicaSetSize" Value="1" />
+    <Parameter Name="SmartHotel.Registration.Wcf_InstanceCount" Value="1" />
+    <Parameter Name="SmartHotel.Registration.Wcf_Isolation" Value="default" />
+    <Parameter Name="SmartHotel.Registration_InstanceCount" Value="1" />
+    <Parameter Name="SmartHotel.Registration_Isolation" Value="default" />
+    <Parameter Name="SmartHotel.RegistrationTypeEndpoint" Value="80" />
+    <Parameter Name="SmartHotel.Registration.WcfTypeEndpoint" Value="2901" />
+    <Parameter Name="SmartHotel.Registration.Web.Env.WcfServiceUri" Value="http://wcf.registration:2901/Service.svc" />
+    <Parameter Name="SmartHotel.Registration.Wcf.Env.DefaultConnection" Value="Server=tcp:shregistrationdbserver.database.windows.net,1433;Initial Catalog=shregistrationdb;Persist Security Info=False;User ID=__yourdbUserName__;Password=__yourdbUserPwd__;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" />
+    <Parameter Name="SmartHotel.Registration.Web.Env.UseStoreKPIsStatefulService" Value="False" />
+  </Parameters>
+</Application>
