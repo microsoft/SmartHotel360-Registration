@@ -1,6 +1,6 @@
 # SmartHotel360
 
-We are happy to announce the release of SmartHotel360. This release intends to share a simplified version of SmartHotel360 reference sample apps used at Connect(); 2017 Keynotes. If you missed it, you can watch <a href="https://channel9.msdn.com/Events/Connect/2017/K100">Scott Guthrie’s Keynote: Journey to the Intelligent Cloud in Channel 9</a>.
+We are happy to announce the release of SmartHotel360. This release intends to share a simplified version of SmartHotel360 reference sample apps used at Connect(); 2017 Keynotes. If you missed it, you can watch <a href="https://channel9.msdn.com/Events/Connect/2017/K100">Scott Guthrieâ€™s Keynote: Journey to the Intelligent Cloud in Channel 9</a>.
 
 We updated the code for this repository to support Scott Hanselman's General Session from Ignite 2018, [An end-to-end tour of the Microsoft developer platform](https://myignite.techcommunity.microsoft.com/sessions/66696#ignite-html-anchor). 
 
@@ -85,7 +85,7 @@ Replace the values and execute the following command in a Powershell console:
 Once the deployment is finished, the resources shown below should appear under your resource group in Azure Portal:
 
 <p align="center">
-    <img src="images/image1.png"/>
+    <img src="Documents/Images/image1.png"/>
 </p>
 
 ## Exercise 1: Deploy lift and shift full framework apps locally
