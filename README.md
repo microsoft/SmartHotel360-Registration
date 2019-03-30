@@ -7,13 +7,14 @@ We updated the code for this repository to support Scott Hanselman's General Ses
 # SmartHotel360 Repos
 For this reference app scenario, we built several consumer and line-of-business apps and an Azure backend. You can find all SmartHotel360 repos in the following locations:
 
-* [SmartHotel360 ](https://github.com/Microsoft/SmartHotel360)
-* [IoT](https://github.com/Microsoft/SmartHotel360-IoT)
-* [Backend](https://github.com/Microsoft/SmartHotel360-Backend)
-* [Website](https://github.com/Microsoft/SmartHotel360-Website)
-* [Mobile](https://github.com/Microsoft/SmartHotel360-Mobile)
-* [Sentiment Analysis](https://github.com/Microsoft/SmartHotel360-SentimentAnalysis)
-* [Registration](https://github.com/Microsoft/SmartHotel360-Registration)
+- [SmartHotel360](https://github.com/Microsoft/SmartHotel360)
+- [IoT](https://github.com/Microsoft/SmartHotel360-IoT)
+- [Mixed Reality](https://github.com/Microsoft/SmartHotel360-MixedReality)
+- [Backend](https://github.com/Microsoft/SmartHotel360-Backend)
+- [Website](https://github.com/Microsoft/SmartHotel360-Website)
+- [Mobile](https://github.com/Microsoft/SmartHotel360-Mobile)
+- [Sentiment Analysis](https://github.com/Microsoft/SmartHotel360-SentimentAnalysis)
+- [Registration](https://github.com/Microsoft/SmartHotel360-Registration)
 
 # SmartHotel360 - Registration
 
@@ -63,15 +64,15 @@ Deploy stateful Reliable Service to Azure
 # Setup
 
 ### Local Setup
-For the demo, a sandboxed Windows 10 virtual machine has been created in Azure with all the tools and SDKs preinstalled. Find RDP connection file at: **.\deploy\vm\SFDemo.rdp**
-Optionally, in case of setting up another environment these are the requirements: 
+You will need:
 *	Windows 10
-*	Visual Studio 2017 Community Edition - Version 15.5 - https://www.visualstudio.com/ 
+*	Visual Studio 2017 Version 15.5 or higher.
 *	You need to have the Azure and .NET workload enabled
-*	Docker CE - https://store.docker.com/editions/community/docker-ce-desktop-windows
-*	Service Fabric SDK - 3.0 or never - https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-get-started
-*	Service Fabric Preview Tooling for 2017 - https://blogs.msdn.microsoft.com/azureservicefabric/2018/02/06/new-preview-tooling-for-visual-studio-2017/
-Additionally, due to a Windows 10 limitation with dns and containers in VMs, UDP offload checksum in the VM needs to be disabled. Find Instructions at: **.\docs\DNS.in.VMs.pdf**
+*	Docker
+*	Service Fabric SDK - 3.0 or higher.
+*	Service Fabric Tooling
+
+Additionally, due to a Windows 10 limitation with dns and containers in VMs, UDP offload checksum in the VM needs to be disabled.
 
 ### Azure Setup
 
@@ -90,7 +91,7 @@ Once the deployment is finished, the resources shown below should appear under y
 
 ## Exercise 1: Deploy lift and shift full framework apps locally
 
-1.	Open visual studio 2017 as Administrator
+1.	Open Visual Studio as Administrator
 2.	Open the SmartHotel.Registration solution.
 
     <p align="center">
