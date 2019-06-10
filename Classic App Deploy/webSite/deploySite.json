@@ -1,0 +1,123 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vmName": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "adminUsername": {
+      "type": "string"
+    },
+    "adminPassword": {
+      "type": "securestring"
+    },
+    "sh360FilesSAName": {
+      "type": "string"
+    },
+    "sh360FilesSAKey": {
+      "type": "string"
+    },
+    "siteName": {
+      "type": "string"
+    },
+    "sh360FilesContainerName": {
+      "type": "string"
+    },
+    "configReplacements": {
+      "type": "array"
+    },
+    "siteArtifactLocation": {
+      "type": "string"
+    },
+    "siteArtifactLocationSasToken": {
+      "type": "string"
+    },
+    "targetIsVMSS": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "A value pointing whether the target is a VM or VM Scale Set"
+      }
+    }
+  },
+  "variables": {
+    "modulesUrl": "[concat(parameters('siteArtifactLocation'),'/dsc/ConfigureIIS.ps1.zip', parameters('siteArtifactLocationSasToken'))]",
+    "aiName": "[concat(resourceGroup().name, '-appInsights')]"
+  },
+  "resources": [
+    {
+      "condition": "[not(parameters('targetIsVMSS'))]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('vmName'),'/ConfigureIIS')]",
+      "apiVersion": "2016-03-30",
+      "location": "[parameters('location')]",
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.77",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "modulesURL": "[variables('modulesUrl')]",
+          "configurationFunction": "ConfigureIIS.ps1\\SH360Website",
+          "properties": {
+            "AppPoolCredential": {
+              "userName": "[parameters('adminUsername')]",
+              "password": "PrivateSettingsRef:adminPassword"
+            },
+            "SH360FilesSAName": "[parameters('sh360FilesSAName')]",
+            "SH360FilesSAKey": "[parameters('sh360FilesSAKey')]",
+            "SiteName": "[parameters('siteName')]",
+            "SH360FilesContainerName": "[parameters('sh360FilesContainerName')]",
+            "ConfigReplacements": "[parameters('configReplacements')]",
+            "AIKey": "[reference(resourceId('Microsoft.Insights/components', variables('aiName')), '2014-04-01').InstrumentationKey]"
+          }
+        },
+        "protectedSettings": {
+          "items": {
+            "adminPassword": "[parameters('adminPassword')]"
+          }
+        }
+      }
+    },
+    {
+      "condition": "[parameters('targetIsVMSS')]",
+      "type": "Microsoft.Compute/virtualMachineScaleSets/extensions",
+      "name": "[concat(parameters('vmName'),'/ConfigureIIS')]",
+      "apiVersion": "2016-03-30",
+      "location": "[parameters('location')]",
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.77",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "modulesURL": "[variables('modulesUrl')]",
+          "configurationFunction": "ConfigureIIS.ps1\\SH360Website",
+          "properties": {
+            "AppPoolCredential": {
+              "userName": "[parameters('adminUsername')]",
+              "password": "PrivateSettingsRef:adminPassword"
+            },
+            "SH360FilesSAName": "[parameters('sh360FilesSAName')]",
+            "SH360FilesSAKey": "[parameters('sh360FilesSAKey')]",
+            "SiteName": "[parameters('siteName')]",
+            "SH360FilesContainerName": "[parameters('sh360FilesContainerName')]",
+            "ConfigReplacements": "[parameters('configReplacements')]",
+            "AIKey": "[reference(resourceId('Microsoft.Insights/components', variables('aiName')), '2014-04-01').InstrumentationKey]"
+          }
+        },
+        "protectedSettings": {
+          "items": {
+            "adminPassword": "[parameters('adminPassword')]"
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {
+
+  }
+}

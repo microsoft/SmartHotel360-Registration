@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmName": {
+            "value": "WF1chdmdev"
+        },
+        "location": {
+            "value": "eastus"
+        },
+        "adminUsername": {
+            "value": "timadmin"
+        },
+        "adminPassword": {
+            "value": null
+        },
+        "sh360FilesSAName": {
+            "value": "deploycontosofiles41"
+        },
+        "sh360FilesSAKey": {
+            "value": ""
+        },
+        "siteName": {
+            "value": "SmartHotel.Registration.Web"
+        },
+        "sh360FilesContainerName": {
+            "value": "sh360ib"
+        },
+        "configReplacements": {
+            "value": [
+                {
+                    "configXPath": "/configuration/system.web/machineKey",
+                    "configValue": "<machineKey decryption=\"AES\" decryptionKey=\"<decryptionKey>\" validation=\"HMACSHA256\" validationKey=\"<validationKey>\" />"
+                },
+                {
+                    "configXPath": "/configuration/system.serviceModel/client/endpoint/@address",
+                    "configValue": "http://10.1.2.4/Service.svc"
+                }
+            ]
+        },
+        "siteArtifactLocation": {
+            "value": "https://deploycontosofiles41.blob.core.windows.net/devfilesdev/dependentResources/webSite"
+        },
+        "siteArtifactLocationSasToken": {
+            "value": ""
+        },
+        "targetIsVMSS": {
+            "value": true
+        }
+    }
+}

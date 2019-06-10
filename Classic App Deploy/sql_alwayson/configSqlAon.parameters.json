@@ -1,0 +1,90 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "eastus"
+        },
+        "vmName": {
+            "value": "sqlVm0"
+        },
+        "modulesUrl": {
+            "value": "https://deploycontosofiles41.blob.core.windows.net/devfilesdev/dependentResources/sql_alwayson/dsc/config-sqlaon.ps1.zip"
+        },
+        "configurationFunction": {
+            "value": "ConfigSQLAOn.ps1\\ConfigSQLAOn"
+        },
+        "domainName": {
+            "value": "NA.contosohotels.com"
+        },
+        "clusterName": {
+            "value": "sqlc"
+        },
+        "clusterIpAddress": {
+            "value": "10.1.1.31"
+        },
+        "clusterOwnerNode": {
+            "value": "sqlVm0"
+        },
+        "witnessStorageName": {
+            "value": "sqlcloudwitumq44cteeooik"
+        },
+        "witnessStorageKey": {
+            "value": null
+        },
+        "agName": {
+            "value": "sqlag"
+        },
+        "agListenerName": {
+            "value": "sh360DB"
+        },
+        "agListenerIpAddresses": {
+            "value": [
+                "10.1.1.30/255.255.255.0",
+                "10.2.0.30/255.255.255.0"
+            ]
+        },
+        "agListenerPort": {
+            "value": 1433
+        },
+        "databaseEnginePort": {
+            "value": 1433
+        },
+        "databaseMirrorPort": {
+            "value": 5022
+        },
+        "probePortNumber": {
+            "value": 59999
+        },
+        "availabilityMode": {
+            "value": "SynchronousCommit"
+        },
+        "failoverMode": {
+            "value": "Automatic"
+        },
+        "isSecondarySite": {
+            "value": false
+        },
+        "adminUserName": {
+            "value": "timadmin"
+        },
+        "adminPassword": {
+            "value": null
+        },
+        "sqlServiceAccount": {
+            "value": "sqlservice"
+        },
+        "sqlServicePassword": {
+            "value": null
+        },
+        "scriptsLocationSAName": {
+            "value": "deploycontosofiles41"
+        },
+        "scriptsLocationSAKey": {
+            "value": null
+        },
+        "scriptsLocationSAContainer": {
+            "value": "sh360ib"
+        }
+    }
+}

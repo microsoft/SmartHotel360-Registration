@@ -1,0 +1,158 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]"
+        },
+        "vmName": {
+            "type": "string"
+        },
+        "modulesUrl": {
+            "type": "string"
+        },
+        "configurationFunction": {
+            "type": "string"
+        },
+        "domainName": {
+            "type": "string"
+        },
+        "clusterName": {
+            "type": "string"
+        },
+        "clusterIpAddress": {
+            "type": "string"
+        },
+        "ClusterOwnerNode": {
+            "type": "string"
+        },
+        "witnessStorageName": {
+            "type": "string"
+        },
+        "witnessStorageKey": {
+            "type": "securestring"
+        },
+        "agName": {
+            "type": "string"
+        },
+        "agListenerName": {
+            "type": "string"
+        },
+        "agListenerIpAddresses": {
+            "type": "array"
+        },
+        "agListenerPort": {
+            "type": "int"
+        },
+        "DatabaseEnginePort": {
+            "type": "int",
+            "defaultValue": 1433
+        },
+        "DatabaseMirrorPort": {
+            "type": "int",
+            "defaultValue": 5022
+        },
+        "ProbePortNumber": {
+            "type": "int",
+            "defaultValue": 59999
+        },
+        "AvailabilityMode": {
+            "type": "string"
+        },
+        "FailoverMode": {
+            "type": "string"
+        },
+        "IsSecondarySite": {
+            "type": "bool"
+        },
+        "adminUserName": {
+            "type": "string"
+        },
+        "adminPassword": {
+            "type": "securestring"
+        },
+        "sqlServiceAccount": {
+            "type": "string"
+        },
+        "sqlServicePassword": {
+            "type": "securestring"
+        },
+        "ScriptsLocationSAName": {
+            "type": "string"
+        },
+        "ScriptsLocationSAKey": {
+            "type": "securestring"
+        },
+        "ScriptsLocationSAContainer": {
+            "type": "string"
+        }
+    },
+    "variables": {
+
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(parameters('vmName'), '/sqlPrep')]",
+            "apiVersion": "2017-03-30",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+
+            ],
+            "properties": {
+                "publisher": "Microsoft.Powershell",
+                "type": "DSC",
+                "typeHandlerVersion": "2.71",
+                "autoUpgradeMinorVersion": true,
+                "forceUpdateTag": "v1",
+                "settings": {
+                    "modulesUrl": "[parameters('modulesUrl')]",
+                    "configurationFunction": "[parameters('configurationFunction')]",
+                    "properties": {
+                        "domainName": "[parameters('domainName')]",
+                        "clusterName": "[parameters('clusterName')]",
+                        "clusterIpAddress": "[parameters('clusterIpAddress')]",
+                        "clusterOwnerNode": "[parameters('ClusterOwnerNode')]",
+                        "witnessStorageName": "[parameters('witnessStorageName')]",
+                        "witnessStorageKey": {
+                            "userName": "PLACEHOLDER-DO-NOT-USE",
+                            "password": "PrivateSettingsRef:witnessStorageKey"
+                        },
+                        "agName": "[parameters('agName')]",
+                        "agListenerName": "[parameters('AGListenerName')]",
+                        "agListenerIpAddresses": "[parameters('AGListenerIpAddresses')]",
+                        "agListenerPort": "[parameters('agListenerPort')]",
+                        "DatabaseEnginePort": "[parameters('DatabaseEnginePort')]",
+                        "DatabaseMirrorPort": "[parameters('DatabaseMirrorPort')]",
+                        "ProbePortNumber": "[parameters('ProbePortNumber')]",
+                        "AvailabilityMode": "[parameters('AvailabilityMode')]",
+                        "FailoverMode": "[parameters('FailoverMode')]",
+                        "isSecondarySite": "[parameters('IsSecondarySite')]",
+                        "ScriptsLocationSAName": "[parameters('ScriptsLocationSAName')]",
+                        "ScriptsLocationSAKey": "[parameters('ScriptsLocationSAKey')]",
+                        "ScriptsLocationSAContainer": "[parameters('ScriptsLocationSAContainer')]",
+                        "adminCreds": {
+                            "userName": "[parameters('adminUserName')]",
+                            "password": "PrivateSettingsRef:adminPassword"
+                        },
+                        "sqlServiceCreds": {
+                            "userName": "[parameters('sqlServiceAccount')]",
+                            "password": "PrivateSettingsRef:sqlServicePassword"
+                        }
+                    }
+                },
+                "protectedSettings": {
+                    "items": {
+                        "adminPassword": "[parameters('adminPassword')]",
+                        "sqlServicePassword": "[parameters('sqlServicePassword')]",
+                        "witnessStorageKey": "[parameters('witnessStorageKey')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+
+    }
+}
