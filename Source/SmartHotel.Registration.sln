@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2008
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28917.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHotel.Registration.Web", "SmartHotel.Registration.Web\SmartHotel.Registration.Web.csproj", "{7DE59C01-0994-4315-B846-1BB8F322D495}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -9,10 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHotel.Registration.Web
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHotel.Registration.Wcf", "SmartHotel.Registration.Wcf\SmartHotel.Registration.Wcf.csproj", "{0CCB6791-5392-4231-BD06-154C64F7BD51}"
-EndProject
-Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "ApplicationModern", "SmartHotel.Registration\ApplicationModern.sfproj", "{9FE7F05E-A514-4B3A-A244-8AA02F51EEE3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHotel.Registration.StoreKPIs", "SmartHotel.Registration.StoreKPIs\SmartHotel.Registration.StoreKPIs.csproj", "{6277EBEA-1E39-478E-A99F-7B4A9A23AC10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,24 +34,6 @@ Global
 		{0CCB6791-5392-4231-BD06-154C64F7BD51}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0CCB6791-5392-4231-BD06-154C64F7BD51}.Release|x64.ActiveCfg = Release|Any CPU
 		{0CCB6791-5392-4231-BD06-154C64F7BD51}.Release|x64.Build.0 = Release|Any CPU
-		{9FE7F05E-A514-4B3A-A244-8AA02F51EEE3}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{9FE7F05E-A514-4B3A-A244-8AA02F51EEE3}.Debug|Any CPU.Build.0 = Debug|x64
-		{9FE7F05E-A514-4B3A-A244-8AA02F51EEE3}.Debug|Any CPU.Deploy.0 = Debug|x64
-		{9FE7F05E-A514-4B3A-A244-8AA02F51EEE3}.Debug|x64.ActiveCfg = Debug|x64
-		{9FE7F05E-A514-4B3A-A244-8AA02F51EEE3}.Debug|x64.Build.0 = Debug|x64
-		{9FE7F05E-A514-4B3A-A244-8AA02F51EEE3}.Debug|x64.Deploy.0 = Debug|x64
-		{9FE7F05E-A514-4B3A-A244-8AA02F51EEE3}.Release|Any CPU.ActiveCfg = Release|x64
-		{9FE7F05E-A514-4B3A-A244-8AA02F51EEE3}.Release|x64.ActiveCfg = Release|x64
-		{9FE7F05E-A514-4B3A-A244-8AA02F51EEE3}.Release|x64.Build.0 = Release|x64
-		{9FE7F05E-A514-4B3A-A244-8AA02F51EEE3}.Release|x64.Deploy.0 = Release|x64
-		{6277EBEA-1E39-478E-A99F-7B4A9A23AC10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6277EBEA-1E39-478E-A99F-7B4A9A23AC10}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6277EBEA-1E39-478E-A99F-7B4A9A23AC10}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{6277EBEA-1E39-478E-A99F-7B4A9A23AC10}.Debug|x64.Build.0 = Debug|Any CPU
-		{6277EBEA-1E39-478E-A99F-7B4A9A23AC10}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6277EBEA-1E39-478E-A99F-7B4A9A23AC10}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6277EBEA-1E39-478E-A99F-7B4A9A23AC10}.Release|x64.ActiveCfg = Release|Any CPU
-		{6277EBEA-1E39-478E-A99F-7B4A9A23AC10}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

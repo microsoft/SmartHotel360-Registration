@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    component: web
+  name: web
+spec:
+  ports:
+  - port: 80
+  selector:
+    component: web

@@ -1,0 +1,5 @@
+commonLabels:
+  app: sh360-reg
+bases:
+- ./api
+- ./web

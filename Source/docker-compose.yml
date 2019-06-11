@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+
+  web:
+    image: ${REGISTRY:-smarthotels}/sh360reg-web:aks
+    build:
+      context: ./SmartHotel.Registration.Web
+      dockerfile: Dockerfile    
+      args:
+        tag: ${wintag:-4.8-windowsservercore-ltsc2019}
+    depends_on:
+      - api
+  api:
+    image: ${REGISTRY:-smarthotels}/sh360reg-api:aks
+    build:
+      context: ./SmartHotel.Registration.Wcf
+      dockerfile: Dockerfile    
+      args:
+        tag: ${wintag:-4.8-windowsservercore-ltsc2019}      
+
+  
