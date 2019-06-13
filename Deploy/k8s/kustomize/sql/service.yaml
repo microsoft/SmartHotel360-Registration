@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    component: sql
+  name: sql
+spec:
+  ports:
+  - port: 1433
+  selector:
+    component: sql

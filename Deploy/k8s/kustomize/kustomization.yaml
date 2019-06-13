@@ -3,3 +3,4 @@ commonLabels:
 bases:
 - ./api
 - ./web
+- ./sql
