@@ -16,3 +16,15 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 80
+          name: http-port
+        env:
+          - name: DefaultConnection
+            valueFrom:
+              configMapKeyRef:
+                name: api
+                key: dbconnection
+          - name: UseStoreKPIsStatefulService
+            valueFrom:
+              configMapKeyRef:
+                name: api
+                key: kpistatefulservice

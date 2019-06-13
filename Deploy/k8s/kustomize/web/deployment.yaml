@@ -16,3 +16,10 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 80
+          name: http_port
+        env:
+          - name: WcfServiceUri
+            valueFrom:
+              configMapKeyRef:
+                name: web
+                key: apiurl

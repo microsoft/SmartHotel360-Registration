@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: sql
+  name: api
 data:
-  altGreeting: "Good Morning!"
-  enableRisky: "false"
+  eula: Y
+  sapwd: P@ssw0rd!

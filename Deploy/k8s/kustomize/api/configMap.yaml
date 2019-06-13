@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: api
 data:
-  altGreeting: "Good Morning!"
-  enableRisky: "false"
+  kpistatefulservice: false
+  dbconnection: Server=sql;Database=SmartHotel.Registration;User Id=sa;Password=P@ssw0rd!;

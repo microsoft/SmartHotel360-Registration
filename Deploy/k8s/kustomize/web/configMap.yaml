@@ -3,5 +3,4 @@ kind: ConfigMap
 metadata:
   name: web
 data:
-  altGreeting: "Good Morning!"
-  enableRisky: "false"
+  apiurl: http://api/Service.svc

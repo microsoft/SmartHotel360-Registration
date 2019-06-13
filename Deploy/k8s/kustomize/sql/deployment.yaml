@@ -16,3 +16,15 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 1433
+          name: sql-port
+        env:
+          - name: ACCEPT_EULA
+            valueFrom:
+              configMapKeyRef:
+                name: sql
+                key: eula
+          - name: sa_password
+            valueFrom:
+              configMapKeyRef:
+                name: sql
+                key: sapwd
