@@ -125,10 +125,13 @@ You can download from their releases page on github or install vía chocolatey p
 
 ```$ choco install kubernetes-helm```
 
-After that you can install helm doing
+After that you can install helm going to the folder ```Deploy\k8s``` and type this commands:
 
 ```$ kubectl apply -f tiller-rbac.yaml```
+this registrates tiller account and role for working in the cluster and :
 ```$ helm init --node-selectors "beta.kubernetes.io/os"="linux" --service-account tiller ```
+
+This installs helm on the cluster, in the linux nodes (helm pods are linux pods, you have to install this tooling in the linux nodes).
 
 Now it's time to setup the ingress controller. This controller has the responsability of route the traffic to the appropiate pod, you can setup this doing:
 
@@ -148,4 +151,4 @@ Once time you have completed this stage, you can install the application executi
 
 >Note there is a parameter call ```dnsname```, this is the dns name of your aks cluster. With this script it associates the dns name to the nginx/ingress controller, if you dont pass a value to this parameter, or you don't setup, it will try to register the dnsname _smhotel360win_
 
-
+![pods working](images/pods_working.png)
