@@ -14,3 +14,7 @@ spec:
         backend:
           serviceName: web
           servicePort: 80
+      - path: /svc
+        backend:
+          serviceName: api
+          servicePort: 80

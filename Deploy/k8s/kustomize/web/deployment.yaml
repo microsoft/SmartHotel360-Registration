@@ -18,10 +18,11 @@ spec:
         - containerPort: 80
         env:
           - name: UseStoreKPIsStatefulService
-            valueFrom:
-              configMapKeyRef:
-                name: web-cm
-                key: kpiactive
+            value: "False"
+          - name: Fabric_ApplicationName
+            value: "MyAwesomeAppIs"  
+          - name: Fabric_NodeIPOrFQDN
+            value: "MyAwesomeAppIs"  
           - name: WcfServiceUri
             valueFrom:
               configMapKeyRef:
