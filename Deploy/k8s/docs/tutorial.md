@@ -142,8 +142,10 @@ helm install stable/nginx-ingress \
 ```
     
 
-Once time you have completed this stage, you can install the application executing the command:
+Once time you have completed this stage, you can install the application executing the powershell script:
 
-```$ kubectl apply -k .```
+```> deploy.ps1 -dnsname yourawesomednsname```
+
+>Note there is a parameter call ```dnsname```, this is the dns name of your aks cluster. With this script it associates the dns name to the nginx/ingress controller, if you dont pass a value to this parameter, or you don't setup, it will try to register the dnsname _smhotel360win_
 
 
