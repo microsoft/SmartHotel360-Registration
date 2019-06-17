@@ -11,15 +11,20 @@ spec:
       nodeSelector:
         "beta.kubernetes.io/os": windows      
       containers:
-      - name: api
+      - name: web
         image: smarthotels/sh360reg-web:aks
         imagePullPolicy: Always
         ports:
         - containerPort: 80
-          name: http_port
         env:
+          - name: UseStoreKPIsStatefulService
+            valueFrom:
+              configMapKeyRef:
+                name: web-cm
+                key: kpiactive
           - name: WcfServiceUri
             valueFrom:
               configMapKeyRef:
-                name: web
+                name: web-cm
                 key: apiurl
+           

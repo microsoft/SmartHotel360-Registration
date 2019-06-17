@@ -4,3 +4,4 @@ bases:
 - ./api
 - ./web
 - ./sql
+- ./ingress

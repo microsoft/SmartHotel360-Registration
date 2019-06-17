@@ -9,22 +9,26 @@ spec:
         component: sql
     spec:
       nodeSelector:
-        "beta.kubernetes.io/os": windows      
+        "beta.kubernetes.io/os": linux      
       containers:
       - name: sql
-        image: microsoft/mssql-server-windows-express:2017-latest
+        image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
         imagePullPolicy: Always
         ports:
         - containerPort: 1433
-          name: sql-port
         env:
           - name: ACCEPT_EULA
             valueFrom:
               configMapKeyRef:
-                name: sql
-                key: eula
-          - name: sa_password
+                name: sql-cm
+                key: ACCEPT_EULA
+          - name: MSSQL_SA_PASSWORD
             valueFrom:
               configMapKeyRef:
-                name: sql
-                key: sapwd
+                name: sql-cm
+                key: sa_password
+          - name: SA_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: sql-cm
+                key: sa_password

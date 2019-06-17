@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: api
-data:
-  eula: Y
-  sapwd: P@ssw0rd!

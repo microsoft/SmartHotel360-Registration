@@ -42,7 +42,6 @@ services:
       - ACCEPT_EULA=Y
       - sa_password=P@ssw0rd!
     networks:
-    - front-tier
     - back-tier
 networks:
   front-tier:
