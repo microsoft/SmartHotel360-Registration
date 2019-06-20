@@ -1,0 +1,9 @@
+configMapGenerator:
+- name: sql-cm
+  literals:
+  - sa_password=P@ssw0rd!
+  - ACCEPT_EULA=Y
+resources:
+  - deployment.yaml
+  - service.yaml
+#  - ingress.yaml

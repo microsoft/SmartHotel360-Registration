@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": windows      
+      containers:
+      - name: web
+        image: smarthotels/sh360reg-web:aks
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+          - name: UseStoreKPIsStatefulService
+            value: "False"
+          - name: Fabric_ApplicationName
+            value: "MyAwesomeAppIs"  
+          - name: Fabric_NodeIPOrFQDN
+            value: "MyAwesomeAppIs"  
+          - name: WcfServiceUri
+            valueFrom:
+              configMapKeyRef:
+                name: web-cm
+                key: apiurl
+           

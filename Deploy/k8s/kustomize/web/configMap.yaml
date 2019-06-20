@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-cm
+data:
+  apiurl: http://api/Service.svc
+  kpiactive: "false"

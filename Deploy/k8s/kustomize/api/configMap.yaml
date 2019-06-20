@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-cm
+data:
+  kpistateful: "false"
+  dbconnection: Server=sql,1433;Database=SmartHotel.Registration;User Id=sa;Password=P@ssw0rd!

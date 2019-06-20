@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  template:
+    metadata:
+      labels:
+        component: api
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": windows    
+      containers:
+      - name: api
+        image: smarthotels/sh360reg-api:aks
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+          - name: DefaultConnection
+            valueFrom:
+              configMapKeyRef:
+                name: api-cm
+                key: dbconnection
+          - name: UseStoreKPIsStatefulService
+            valueFrom:
+              configMapKeyRef:
+                name: api-cm
+                key: kpistateful

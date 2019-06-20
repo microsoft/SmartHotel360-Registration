@@ -1,0 +1,34 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sql
+spec:
+  template:
+    metadata:
+      labels:
+        component: sql
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux      
+      containers:
+      - name: sql
+        image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 1433
+        env:
+          - name: ACCEPT_EULA
+            valueFrom:
+              configMapKeyRef:
+                name: sql-cm
+                key: ACCEPT_EULA
+          - name: MSSQL_SA_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: sql-cm
+                key: sa_password
+          - name: SA_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: sql-cm
+                key: sa_password
