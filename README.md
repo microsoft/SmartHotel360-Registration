@@ -57,17 +57,6 @@ You will need:
 - Aks-preview CLI extension
 - Download and install helm
 
-## Azure Setup
-
-Execute the powershell script to create all the infrastructure necessary to deploy the applications in Azure. The script is located at: **.\deploy\gen-sf-resources.ps1**
-Replace the values and execute the following command in a Powershell console:
-
-```
-.\gen-sf-resources.ps1 -subscriptionId <subscriptionId> -resourceGroupName <resource group name> -vaultName <keyvault name> -vaultPwd <keyvault password> -clustername <cluster name> -clusterAdminUser <cluster admin name> -clusterAdminPwd <cluster admin password> -dbAdminUser <database username> -dbAdminPwd <database password> -location <resource location> -certPwd <certificate password>
-```
-
-Once the deployment is finished, the resources shown below should appear under your resource group in Azure Portal.
-
 ## Exercise 1: Deploy lift and shift locally 
 
 1. Open Visual Studio as Administrator.
