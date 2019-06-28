@@ -36,12 +36,11 @@ The key takeaways of this demo are:
 
 Lift and shift Full Framework applications to Azure.
 Deploy the SmartHotel 360 Registration in an AKS with Windows nodes
-Debug apps and services locally with Docker.
 
 ## Demo Scenario
 
 - Deploy locally with Docker
-Illustrates how easy it is to deploy and debug apps with Docker.
+Illustrates how easy it is to deploy.
 
 - Deploy on AKS (with windows Containers)
 Instructs the steps to deploy apps to Azure Kubernetes Service.
