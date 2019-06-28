@@ -20,367 +20,243 @@ For this reference app scenario, we built several consumer and line-of-business 
 
 The application we are using in this sample is a hotel front-desk registration application. It's basic functionality is to check guest in and out.
 
-<p align="center">
-        <img src="Documents/Images/image8.png"/>
-    </p>
+![pods working](Documents/Images/website_deploy.png)
 
 # Getting Started 
 
-To modernize the application, it is followed a lift and shift approach to move it to Azure. To do so, we first need to containerize the application and later host it in Azure Service Fabric.
+To modernize the application, it is followed a lift and shift approach to move it to Azure. To do so, we first need to containerize the application and later host it in Azure Kubernetes Service (AKS).
 
 The application is the existing WebForms, WCF and Azure SQL Database pieces, as depicted below. This is a very traditional three-tire application, using Entity Framework to integrate with the data in the Azure SQL database, exposing it through a WCF service, which the WebForms application then interacts with.
 
-   <p align="center">
-        <img src="Documents/Images/arch-overview-1.PNG"/>
-    </p>
+![Architecture Overview](Documents/Images/arch_overview.PNG)
 
-The final step of the modernization is to add a Service Fabric Stateful service to store registration information that can later be retrieved by the WebForms app to show different registration KPIs. Data is stored using SF Reliable Collections and distributed in different service partitions.
-
-  <p align="center">
-        <img src="Documents/Images/arch-overview-2.png"/>
-    </p>
 
 ## Key Takeaways
-
 The key takeaways of this demo are:
-* Lift and shift Full Framework applications to Azure.
-* Create Service Fabric Stateful Reliable Services that interact with Guest Full Framework apps.
-* Debug apps and services locally with Service Fabric SDK.
+
+Lift and shift Full Framework applications to Azure.
+Deploy the SmartHotel 360 Registration in an AKS with Windows nodes
+Debug apps and services locally with Docker.
 
 ## Demo Scenario
 
-Deploy lift and shift full framework apps locally
-* Illustrates how easy it is to deploy and debug apps in Service Fabric locally
+- Deploy locally with Docker
+Illustrates how easy it is to deploy and debug apps with Docker.
 
-Deploy lift and shift full framework apps to Azure
-* Instructs the steps to deploy apps to Azure Service Fabric
+- Deploy on AKS (with windows Containers)
+Instructs the steps to deploy apps to Azure Kubernetes Service.
 
-Deploy stateful Reliable Service locally
-* Presents an scenario where a stateful service is deployed along with the lift and shift full framework apps and how easy is to debug these services.
+## Setup
 
-Deploy stateful Reliable Service to Azure
-* Shows the steps to deploy the stateful Reliable Service scenario to Azure Service Fabric.
-
-# Setup
-
-### Local Setup
 You will need:
-*	Windows 10
-*	Visual Studio 2017 Version 15.5 or higher.
-*	You need to have the Azure and .NET workload enabled
-*	Docker
-*	Service Fabric SDK - 3.0 or higher.
-*	Service Fabric Tooling
 
-Additionally, due to a Windows 10 limitation with dns and containers in VMs, UDP offload checksum in the VM needs to be disabled.
+- Windows 10
+- Visual Studio 2017 Version 15.5 or higher.
+- You need to have the Azure and .NET workload enabled
+- Docker
+- Aks-preview CLI extension
+- Download and install helm
 
-### Azure Setup
-
-# Deploy to Azure
+## Azure Setup
 
 Execute the powershell script to create all the infrastructure necessary to deploy the applications to Service Fabric in Azure. The script is located at: **.\deploy\gen-sf-resources.ps1**
 Replace the values and execute the following command in a Powershell console:
+
 ```
 .\gen-sf-resources.ps1 -subscriptionId <subscriptionId> -resourceGroupName <resource group name> -vaultName <keyvault name> -vaultPwd <keyvault password> -clustername <cluster name> -clusterAdminUser <cluster admin name> -clusterAdminPwd <cluster admin password> -dbAdminUser <database username> -dbAdminPwd <database password> -location <resource location> -certPwd <certificate password>
 ```
-Once the deployment is finished, the resources shown below should appear under your resource group in Azure Portal:
 
-<p align="center">
-    <img src="Documents/Images/image1.png"/>
-</p>
+Once the deployment is finished, the resources shown below should appear under your resource group in Azure Portal.
 
-## Exercise 1: Deploy lift and shift full framework apps locally
+## Exercise 1: Deploy lift and shift locally 
 
-1.	Open Visual Studio as Administrator
-2.	Open the SmartHotel.Registration solution.
+1. Open Visual Studio as Administrator.
 
-    <p align="center">
-        <img src="Documents/Images/image3.png"/>
-    </p>
-    > In the solution explorer 4 projects are shown. 
-    The ApplicationModern  which contains all SF manifests.
-    The Registration.Wcf contains a containerized WCF service.
-    The Registration.Web contains a containerized Web Forms app.
-    The Registration.StoreKPIs contains a .Net Core stateful Reliable Service for storing registration KPIs in Reliable Collections. 
+2. Open the SmartHotel.Registration solution.
 
-3.	Open the Local.1Node and Local.5Node xml file and set the DefaultConnection parameter with the database UserId and Password  previously used in the setup chapter
+3. Open and set Docker with Windows Containers.
 
-    <p align="center">
-        <img src="Documents/Images/image4.png"/>
-    </p>
-    > These xml files configure the Service fabric settings when deploying to SF locally.
+4. Publish the two projects: SmartHotel.Registration.Wcf and SmartHotel.Registration.Web using Visual Studio. This publish will generate necessary files to run the project locally with docker. In this case we have published these projects in obj\Docker\publish in accordance with docker files project (COPY ${source:-obj/Docker/publish} .)
 
-4.	Click Start button
+![Publish option](Documents/Images/publish.PNG)
 
-    <p align="center">
-        <img src="Documents/Images/image5.png"/>
-    </p>
-    > With F5 experience, Visual Studio will generate the docker images for each service and deploy the app to the local SF cluster.
+![Publish routes](Documents/Images/publish_route.PNG)
 
-5.	Connect to Service Fabric Dashboard: http://localhost:19080/Explorer
+5. Now we are ready to run. Located where docker-compose.yml is, run docker-compose build and docker-compose up to deploy all resources needed.
+If it is your first time remember that docker-compose build may take some time because is creating all images.
 
-    <p align="center">
-        <img src="Documents/Images/image6.png"/>
-    </p>
-    > Verify that the application and 3 services have been deployed. 
-    Verify that the nodes, application and services are in healthy state in the Service Fabric dashboard (This might take a while).
+6. After docker-compose up finishes website will be deployed and accessible at http://localhost:5000/
 
-6.	Open the Default.aspx.cs file in the Web.Registration project and set a breakpoint.
+![Docker finished](Documents/Images/dockercomposeup_finish.PNG)
 
-7.	Go to the web browser and enter the url: http://localhost:5000
+The Web app shows a list of customer registrations. If so, it means that all services are up and running.
 
-    <p align="center">
-        <img src="Documents/Images/image7.png"/>
-    </p>
+![pods working](Documents/Images/website_deploy.png)
 
-    <p align="center">
-        <img src="Documents/Images/image8.png"/>
-    </p>
-    > Check that the Registration web app is shown in the browser and the breakpoint is hit in Visual Studio ready to debug.
-    The Web app shows a list of customer registrations. If so, it means that all services are up and running and the Web App is able to communicate with WCF service in SF cluster.
+We could to debug the apps and services locally running these projects with Visual Studio.
 
+## Exercise 2: Deploy lift and shift with Azure Kubernetes Service (AKS)
 
-## Exercise 2: Deploy lift and shift full framework apps to Azure
+This tutorial is a starting point for deploy the SmartHotel 360 Registration in an AKS with Windows nodes.
 
-1.	Open the Cloud xml file and set the DefaultConnection parameter with the database UserId and Password  previously used in the setup chapter.
+1. Building the AKS
+First step is configure and enable the AKS Cluster ready for windows, for doing this, you have to follow this steps:
 
-2.	Set the Registration_InstanceCount parameter to 3.
+### Install aks-preview CLI extension
 
-    <p align="center">
-        <img src="Documents/Images/image9.png"/>
-    </p>
-    > This xml file configure the Service fabric settings when deploying to SF in Azure.
-    By setting up the InstanceCount parameters we are telling SF to scale the app to multiple instances during deployment.
+The CLI commands to create and manage multiple node pools are available in the aks-preview CLI extension. Install the aks-preview Azure CLI extension using the az extension add command, as shown in the following example:
 
-3.	Right click on the ApplicationModern SF project and select Publish option.
+```az extension add --name aks-preview```
 
-    <p align="center">
-        <img src="Documents/Images/image10.png"/>
-    </p>
+If you've previously installed the aks-preview extension, install any available updates using the az extension update ```--name aks-preview``` command.
 
-4.	Select the connection endpoint pointing to the Service Fabric you previously created in the setup chapter.
+### Register Windows preview feature
+To create an AKS cluster that can use multiple node pools and run Windows Server containers, first enable the WindowsPreview feature flags on your subscription. The WindowsPreview feature also uses multi-node pool clusters and virtual machine scale set to manage the deployment and configuration of the Kubernetes nodes. Register the WindowsPreview feature flag using the az feature register command as shown in the following example:
 
-5.	Select the Azure Container Registry you previously created in the setup chapter. 
+```az feature register --name WindowsPreview --namespace Microsoft.ContainerService ```
+ 
+> Any AKS cluster you create after you've successfully registered the WindowsPreview feature flag use this preview cluster experience. To continue to create regular, fully-supported clusters, don't enable preview features on production subscriptions. Use a separate test or development Azure subscription for testing preview features.
 
-    <p align="center">
-        <img src="Documents/Images/image11.png"/>
-    </p>
-    > When publishing, Visual Studio builds de docker images for each service and push them to the Container Registry. After that, it deploys the SF app to the cluster in Azure.
+It takes a few minutes for the status to show Registered. You can check on the registration status using the az feature list command:
 
-6.	Go to Azure Portal https://portal.azure.com
+```az feature list -o table --query "[?contains(name, 'Microsoft.ContainerService/WindowsPreview')].{Name:name,State:properties.state}"```
 
-7.	Login and go to the resource group you used in the setup chapter.
+When ready, refresh the registration of the Microsoft.ContainerService resource provider using the az provider register command:
 
-8.	Click the Service Fabric Resource and select the Explorer link.
+```az provider register --namespace Microsoft.ContainerService``` 
+> _Limitations_
+The following limitations apply when you create and manage AKS clusters that support multiple node pools:
+>Multiple node pools are available for clusters created after you've successfully registered the WindowsPreview. Multiple node pools are also available if you register the MultiAgentpoolPreview and VMSSPreview features for your subscription. You can't add or manage node pools with an existing AKS cluster created before these features were successfully registered.
+You can't delete the first node pool.
+While this feature is in preview, the following additional limitations apply:
+> - The AKS cluster can have a maximum of eight node pools.
+> - The AKS cluster can have a maximum of 400 nodes across those eight node pools.
+> - The Windows Server node pool name has a limit of 6 characters.
 
-    <p align="center">
-        <img src="Documents/Images/image12.png"/>
-    </p>
+### Create a resource group
 
-9.	When the browser warns about it is an insecure site. Continue and select the certificate when the browser asks to.
+An Azure resource group is a logical group in which Azure resources are deployed and managed. When you create a resource group, you are asked to specify a location. This location is where resource group metadata is stored, it is also where your resources run in Azure if you don't specify another region during resource creation. Create a resource group using the az group create command.
 
-    <p align="center">
-        <img src="Documents/Images/image13.png"/>
-    </p>
+The following example creates a resource group named myResourceGroup in the eastus location.
 
-10.	Go to the dashboard, select the SmartHotel.Registration Service under Applications.
+```az group create --name myResourceGroup --location eastus`` 
 
-    <p align="center">
-        <img src="Documents/Images/image14.png"/>
-    </p>
-    > Verify that the application and 3 services have been deployed. Check that the nodes, application and services are in healthy state in the Service Fabric dashboard (This might take a while) and SmartHotel.Registration Service has 3 instances created
+The following example output shows the resource group created successfully:
 
+```
+{
+  "id": "/subscriptions/<guid>/resourceGroups/myResourceGroup",
+  "location": "eastus",
+  "managedBy": null,
+  "name": "myResourceGroup",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": null,
+  "type": null
+}
+```
 
-11.	Go to the browser and enter your cluster dnsname
+### Create AKS cluster
+In order to run an AKS cluster that supports node pools for Windows Server containers, your cluster needs to use a network policy that uses Azure CNI (advanced) network plugin. For more detailed information to help plan out the required subnet ranges and network considerations, see configure Azure CNI networking. Use the az aks create command to create an AKS cluster named myAKSCluster. This command will create the necessary network resources if they don't exist.
 
-12.	Refresh the browser multiple times
+The cluster is configured with one node
+The windows-admin-password and windows-admin-username parameters set the admin credentials for any Windows Server containers created on the cluster.
+Provide your own secure PASSWORD_WIN.
 
-    <p align="center">
-        <img src="Documents/Images/image15.png"/>
-    </p>
-    > Check that the Service Instance Id is changing depending on the instance that is processing the request.
+```
+PASSWORD_WIN="P@ssw0rd1234"
 
-13.	Go to the dashboard, select the SmartHotel.Registration Service under Applications and click the right button.
+az aks create \
+    --resource-group myResourceGroup \
+    --name myAKSCluster \
+    --node-count 1 \
+    --enable-addons monitoring \
+    --kubernetes-version 1.14.0 \
+    --generate-ssh-keys \
+    --windows-admin-password $PASSWORD_WIN \
+    --windows-admin-username azureuser \
+    --enable-vmss \
+    --network-plugin azure
+```
 
-14.	Select Scale Service option and set a -1 value
+After a few minutes, the command completes and returns JSON-formatted information about the cluster.
 
-     <p align="center">
-        <img src="Documents/Images/image16.png"/>
-    </p>
-     > Change the number of instances from the dashboard. After a while, the service instances should be rescaled.
+### Add a Windows Server node pool
+By default, an AKS cluster is created with a node pool that can run Linux containers. Use az aks nodepool add command to add an additional node pool that can run Windows Server containers.
 
+```
+az aks nodepool add \
+    --resource-group myResourceGroup \
+    --cluster-name myAKSCluster \
+    --os-type Windows \
+    --name npwin \
+    --node-count 1 \
+    --kubernetes-version 1.14.0
+```
 
-## Exercise 3: Deploy stateful Reliable Service locally
+The above command creates a new node pool named npwin and adds it to the myAKSCluster. When creating a node pool to run Windows Server containers, the default value for node-vm-size is Standard_D2s_v3. If you choose to set the node-vm-size parameter, please check the list of restricted VM sizes. The minimum recommended size is Standard_D2s_v3. The above command also uses the default subnet in the default vnet created when running az aks create.
 
-1.	Open visual studio 2017 as Administrator
-2.	Open the SmartHotel.Registration solution.
+### Connect to the cluster
+To manage a Kubernetes cluster, you use kubectl, the Kubernetes command-line client. If you use Azure Cloud Shell, kubectl is already installed. To install kubectl locally, use the az aks install-cli command:
 
-    <p align="center">
-        <img src="Documents/Images/image17.png"/>
-    </p>
+```az aks install-cli```
 
-    > In the solution explorer 4 projects are shown. 
-    The ApplicationModern  which contains all SF manifests.
-    The Registration.Wcf contains a containerized WCF service.
-    The Registration.Web contains a containerized Web Forms app.
-    The Registration.StoreKPIs contains a .Net Core stateful Reliable Service for storing registration KPIs in Reliable Collections. 
+To configure kubectl to connect to your Kubernetes cluster, use the az aks get-credentials command. This command downloads credentials and configures the Kubernetes CLI to use them.
 
-3.	Open the Local.1Node and Local.5Node xml file 
-    > These xml files configure the Service fabric settings when deploying to SF locally.
+```az aks get-credentials --resource-group myResourceGroup --name myAKSCluster ```
 
-4.	Set the **DefaultConnection** parameter with the database **UserId** and **Password**  previously used in the setup chapter.
+To verify the connection to your cluster, use the kubectl get command to return a list of the cluster nodes.
 
-5.	Set the **UseStoreKPIsStatefulService** parameter to **True**
+```kubectl get nodes```
 
-6.	Click Start button
-     <p align="center">
-        <img src="Documents/Images/image5.png"/>
-    </p>
-     > With F5 experience, Visual Studio will generate the docker images for each service and deploy the app to the local SF cluster.
 
-10.	Connect to Service Fabric Dashboard: http://localhost:19080/Explorer
-    <p align="center">
-        <img src="Documents/Images/image6.png"/>
-    </p>
-    > Verify that the application and 3 services have been deployed. Verify that the nodes, application and services are in healthy state in the Service Fabric dashboard (This might take a while).
+2. Setting up an AKS Cluster with Windows Machines
 
-11.	Go to the dashboard, select the SmartHotel.Registration.StoreKPIs Service under.
+For installing this application you need to have helm installed on your local machine and in your kubernetes cluster. You can achieve this following these instructions:
 
-    <p align="center">
-        <img src="Documents/Images/image18.png"/>
-    </p>
-    > Verify that the stateful service and the 10 partitions are in Healthy state.
+## Download and install helm
 
-12.	Open the ValuesController.cs file in the Registration.StoreKPIs project and set a breakpoint to the Get/Id endpoint.
+You can download from their releases page on github or install vía chocolatey package manager:
 
-    <p align="center">
-        <img src="Documents/Images/image19.png"/>
-    </p>
+```$ choco install kubernetes-helm```
 
-13.	Go to the web browser and enter the url: http://localhost:5000
+After that you can install helm going to the folder ```Deploy\k8s``` and type this commands:
 
-14.	Click Display KPI button
+```$ kubectl apply -f tiller-rbac.yaml```
+this registrates tiller account and role for working in the cluster and :
+```$ helm init --node-selectors "beta.kubernetes.io/os"="linux" --service-account tiller ```
 
-    <p align="center">
-        <img src="Documents/Images/image20.png"/>
-    </p>
-    > The Display KPI button should appear. When clicking the button, it is redirected to the KPIs page where it is shown a chart with registration KPIs. 
+This installs helm on the cluster, in the linux nodes (helm pods are linux pods, you have to install this tooling in the linux nodes).
 
-    <p align="center">
-        <img src="Documents/Images/image21.png"/>
-    </p>
+Now it's time to setup the ingress controller. This controller has the responsability of route the traffic to the appropiate pod, you can setup this doing:
 
-15.	Select a user from the Dropdownlist
+```
+helm install stable/nginx-ingress \ 
+    --name smgateway \
+    --namespace kube-system \
+    --set controller.replicaCount=2 
+    --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux  \
+    --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux
+```
+    
 
-    <p align="center">
-        <img src="Documents/Images/image22.png"/>
-    </p>
-    > The breakpoint in the Registration.StoreKPIs service should be hit since the PKIs page retrieves the data from that stateful service. You can debug the service and check that the Reliable Collections where data is stored contains the registration KPIs for that specific user.
+Once time you have completed this stage, you can install the application executing the powershell script:
 
-    <p align="center">
-        <img src="Documents/Images/image23.png"/>
-    </p>
+```> deploy.ps1 -dnsname yourawesomednsname```
 
+>Note there is a parameter call ```dnsname```, this is the dns name of your aks cluster. With this script it associates the dns name to the nginx/ingress controller, if you dont pass a value to this parameter, or you don't setup, it will try to register the dnsname _smhotel360win_
 
-## Exercise 4: Deploy stateful Reliable Service to Azure
+![pods working](Documents/Images/pods_working.png)
 
-1.	Open the Cloud xml file and set the DefaultConnection parameter with the database UserId and Password  previously used in the setup chapter.
+## Summary
+Docker and Azure Kubernetes Service allow us to deploy Full Framework applications and bring them to Azure providing all the benefits of the cloud such as reliability and scalability.
 
-2.	Set the UseStoreKPIsStatefulService parameter to True
+Service Fabric allows us to easily lift and shift Full Framework applications and bring them to Azure providing all the benefits of the cloud such as reliability and scalability. Furthermore, Service Fabric tools helps us to deploy and debug the apps and services locally.
 
-    <p align="center">
-        <img src="Documents/Images/image24.png"/>
-    </p>
-    > This xml file configure the Service fabric settings when deploying to SF in Azure.
+## Contributing
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
 
-3.	Right click on the ApplicationModern SF project and select Publish option.
+When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
-    <p align="center">
-        <img src="Documents/Images/image10.png"/>
-    </p>
-
-4.	Select the connection endpoint pointing to the Service Fabric you previously created in the setup chapter.
-
-5.	Select the Azure Container Registry you previously created in the setup chapter. 
-
-    <p align="center">
-        <img src="Documents/Images/image11.png"/>
-    </p>
-    > When publishing, Visual Studio builds de docker images for each service and push them to the Container Registry. After that, it deploys the SF app to the cluster in Azure.
-
-6.	Go to Azure Portal https://portal.azure.com
-
-7.	Login and go to the resource group you used in the setup chapter.
-
-8.	Click the Service Fabric Resource and select the Explorer link.
-
-9.	When the browser warns about it is an insecure site. Continue and select the certificate when the browser asks to.
-
-10.	Go to the dashboard, select the SmartHotel.Registration.StoreKPIs Service under Applications.
-
-    <p align="center">
-        <img src="Documents/Images/image12.png"/>
-    </p>
-    > Verify that the application and 3 services have been deployed. Check that the nodes, application and services are in healthy state in the Service Fabric dashboard and SmartHotel.Registration Service has 3 instances created (This might take a while).
-
-    <p align="center">
-        <img src="Documents/Images/image13.png"/>
-    </p>
-
-    <p align="center">
-        <img src="Documents/Images/image18.png"/>
-    </p>
-    > Verify that the Registration.StoreKPIs  stateful service and the 10 partitions are in Healthy state.
-
-11.	Go to the browser and enter your cluster dnsname
-
-12.	Click Display KPI button
-
-    <p align="center">
-        <img src="Documents/Images/image25.png"/>
-    </p>
-    > The Display KPI button should appear. When clicking the button, it is redirected to the KPIs page where it is shown a chart with registration KPIs. 
-
-    <p align="center">
-        <img src="Documents/Images/image21.png"/>
-    </p>
-
-13.	Click Back button to return to the main page.
-
-14.	Click Register button
-
-15.	Register a new reservation
-
-    <p align="center">
-        <img src="Documents/Images/image26.png"/>
-    </p>
-    > Registers a new reservation and it is redirected to the main page.
-
-16.	Click Display KPI button
-
-    > The page shows the KPIs of all the customer registrations. This data is recollected from the stateful Register.StoreKPI service.
-
-17.	Select the new created customer in the dropdownlist
-
-    <p align="center">
-        <img src="Documents/Images/image27.png"/>
-    </p>
-    > The new customer should appear in the list and show its KPIs
-
-# Summary
-
-Service Fabric allows us to easily lift and shift Full Framework applications and bring them to Azure providing all the benefits of the cloud such as reliability and scalability. Furthermore, Service Fabric tools helps us to deploy and debug the apps and services locally. 
-
-# Contributing
-
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.microsoft.com.
-
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+This project has adopted the Microsoft Open Source Code of Conduct. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
