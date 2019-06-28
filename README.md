@@ -59,7 +59,7 @@ You will need:
 
 ## Azure Setup
 
-Execute the powershell script to create all the infrastructure necessary to deploy the applications to Service Fabric in Azure. The script is located at: **.\deploy\gen-sf-resources.ps1**
+Execute the powershell script to create all the infrastructure necessary to deploy the applications in Azure. The script is located at: **.\deploy\gen-sf-resources.ps1**
 Replace the values and execute the following command in a Powershell console:
 
 ```
@@ -251,8 +251,6 @@ Once time you have completed this stage, you can install the application executi
 
 ## Summary
 Docker and Azure Kubernetes Service allow us to deploy Full Framework applications and bring them to Azure providing all the benefits of the cloud such as reliability and scalability.
-
-Service Fabric allows us to easily lift and shift Full Framework applications and bring them to Azure providing all the benefits of the cloud such as reliability and scalability. Furthermore, Service Fabric tools helps us to deploy and debug the apps and services locally.
 
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
