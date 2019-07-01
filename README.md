@@ -203,7 +203,7 @@ To verify the connection to your cluster, use the kubectl get command to return 
 
 For installing this application you need to have helm installed on your local machine and in your kubernetes cluster. You can achieve this following these instructions:
 
-## Download and install helm
+### Download and install helm
 
 You can download from their releases page on github or install vía chocolatey package manager:
 
