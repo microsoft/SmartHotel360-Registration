@@ -13,9 +13,6 @@ services:
       dockerfile: Dockerfile    
       args:
         tag: ${wintag:-4.8-windowsservercore-ltsc2019}
-    networks:
-      - front-tier
-      - back-tier
     depends_on:
       - api
   api:
@@ -24,9 +21,6 @@ services:
      - .env
     ports:
       - "4001:80"
-    networks:
-      - front-tier
-      - back-tier
     build:
       context: ./SmartHotel.Registration.Wcf
       dockerfile: Dockerfile    
@@ -41,8 +35,3 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - sa_password=P@ssw0rd!
-    networks:
-    - back-tier
-networks:
-  front-tier:
-  back-tier:

@@ -79,7 +79,7 @@ If it is your first time remember that docker-compose build may take some time b
 
 The Web app shows a list of customer registrations. If so, it means that all services are up and running.
 
-![pods working](Documents/Images/website_deploy.png)
+![website deploy options](Documents/Images/website_deploy.png)
 
 We could to debug the apps and services locally running these projects with Visual Studio.
 
@@ -94,24 +94,33 @@ First step is configure and enable the AKS Cluster ready for windows, for doing 
 
 The CLI commands to create and manage multiple node pools are available in the aks-preview CLI extension. Install the aks-preview Azure CLI extension using the az extension add command, as shown in the following example:
 
-```az extension add --name aks-preview```
+```bash
+az extension add --name aks-preview
+```
 
 If you've previously installed the aks-preview extension, install any available updates using the az extension update ```--name aks-preview``` command.
 
 ### Register Windows preview feature
 To create an AKS cluster that can use multiple node pools and run Windows Server containers, first enable the WindowsPreview feature flags on your subscription. The WindowsPreview feature also uses multi-node pool clusters and virtual machine scale set to manage the deployment and configuration of the Kubernetes nodes. Register the WindowsPreview feature flag using the az feature register command as shown in the following example:
 
-```az feature register --name WindowsPreview --namespace Microsoft.ContainerService ```
+```bash
+az feature register --name WindowsPreview --namespace Microsoft.ContainerService
+```
  
 > Any AKS cluster you create after you've successfully registered the WindowsPreview feature flag use this preview cluster experience. To continue to create regular, fully-supported clusters, don't enable preview features on production subscriptions. Use a separate test or development Azure subscription for testing preview features.
 
 It takes a few minutes for the status to show Registered. You can check on the registration status using the az feature list command:
 
-```az feature list -o table --query "[?contains(name, 'Microsoft.ContainerService/WindowsPreview')].{Name:name,State:properties.state}"```
+```bash
+az feature list -o table --query "[?contains(name, 'Microsoft.ContainerService/WindowsPreview')].{Name:name,State:properties.state}"
+```
 
 When ready, refresh the registration of the Microsoft.ContainerService resource provider using the az provider register command:
 
-```az provider register --namespace Microsoft.ContainerService``` 
+```bash
+az provider register --namespace Microsoft.ContainerService
+``` 
+
 > _Limitations_
 The following limitations apply when you create and manage AKS clusters that support multiple node pools:
 >Multiple node pools are available for clusters created after you've successfully registered the WindowsPreview. Multiple node pools are also available if you register the MultiAgentpoolPreview and VMSSPreview features for your subscription. You can't add or manage node pools with an existing AKS cluster created before these features were successfully registered.
@@ -127,11 +136,13 @@ An Azure resource group is a logical group in which Azure resources are deployed
 
 The following example creates a resource group named myResourceGroup in the eastus location.
 
-```az group create --name myResourceGroup --location eastus`` 
+```bash
+az group create --name myResourceGroup --location eastus
+```
 
 The following example output shows the resource group created successfully:
 
-```
+```json
 {
   "id": "/subscriptions/<guid>/resourceGroups/myResourceGroup",
   "location": "eastus",
@@ -145,14 +156,14 @@ The following example output shows the resource group created successfully:
 }
 ```
 
-### Create AKS cluster
+### Create AKS cluster using the CLI
 In order to run an AKS cluster that supports node pools for Windows Server containers, your cluster needs to use a network policy that uses Azure CNI (advanced) network plugin. For more detailed information to help plan out the required subnet ranges and network considerations, see configure Azure CNI networking. Use the az aks create command to create an AKS cluster named myAKSCluster. This command will create the necessary network resources if they don't exist.
 
 The cluster is configured with one node
 The windows-admin-password and windows-admin-username parameters set the admin credentials for any Windows Server containers created on the cluster.
-Provide your own secure PASSWORD_WIN.
+Provide your own secure PASSWORD_WIN. 
 
-```
+```bash
 PASSWORD_WIN="P@ssw0rd1234"
 
 az aks create \
@@ -170,10 +181,12 @@ az aks create \
 
 After a few minutes, the command completes and returns JSON-formatted information about the cluster.
 
+**Note**: If using Powershell you can use the script `/Deploy/CreateAks.ps1` instead
+
 ### Add a Windows Server node pool
 By default, an AKS cluster is created with a node pool that can run Linux containers. Use az aks nodepool add command to add an additional node pool that can run Windows Server containers.
 
-```
+```bash
 az aks nodepool add \
     --resource-group myResourceGroup \
     --cluster-name myAKSCluster \
@@ -185,41 +198,59 @@ az aks nodepool add \
 
 The above command creates a new node pool named npwin and adds it to the myAKSCluster. When creating a node pool to run Windows Server containers, the default value for node-vm-size is Standard_D2s_v3. If you choose to set the node-vm-size parameter, please check the list of restricted VM sizes. The minimum recommended size is Standard_D2s_v3. The above command also uses the default subnet in the default vnet created when running az aks create.
 
+**Note**: If using Powershell you can use the script `/Deploy/CreateAks.ps1` instead
+
+### Creating AKS using PowerShell
+
+Instead of using `az` to create the AKS and add the node pool, if using PowerShell you can use the script `/Deploy/CreateAks.ps1` instead. The script will create an AKS and add the windows node pool. Parameters of the script are:
+
+* `aksName`: Name of the AKS to create
+* `resourceGroup`: Resource group where to create the AKS. It must exist
+* `clientId`: Service principal ID to use for create the AKS. If ommited a new service principal will be created.
+* `clientPassword`: Password of the service principal to use for create the AKS. If ommited a new service principal will be created.
+* `winuser`: Windows user of the windows machines. Defaults to `azureuser`
+* `winpwd`: Password of the user of the windows machines.
+* `aksVersion`: Kubernetes version to use. If ommited the latest version available in the resource group location will be used.
+* `windowsNodes`: Number of windows nodes. Defaults to `2`.
+* `linuxNodes`: Number of linux nodes. Defaults to `2`.
+
 ### Connect to the cluster
 To manage a Kubernetes cluster, you use kubectl, the Kubernetes command-line client. If you use Azure Cloud Shell, kubectl is already installed. To install kubectl locally, use the az aks install-cli command:
 
-```az aks install-cli```
+```bash
+az aks install-cli
+```
+
+>**Note** Please ensure that the kubectl version is **at least** 1.14.3. If a previous version is installed update the Azure CLI or [install kubectl manually](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
 
 To configure kubectl to connect to your Kubernetes cluster, use the az aks get-credentials command. This command downloads credentials and configures the Kubernetes CLI to use them.
 
-```az aks get-credentials --resource-group myResourceGroup --name myAKSCluster ```
+```bash
+az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
+```
 
-To verify the connection to your cluster, use the kubectl get command to return a list of the cluster nodes.
+To verify the connection to your cluster, use the command `kubectl get nodes -o wide` to return a list of the cluster nodes. Nodes of the two nodepools should be listed:
 
-```kubectl get nodes```
-
-
-2. Setting up an AKS Cluster with Windows Machines
-
-For installing this application you need to have helm installed on your local machine and in your kubernetes cluster. You can achieve this following these instructions:
+![Output of kubectl get nodes](./Documents/Images/get-nodes.png)
 
 ### Download and install helm
 
-You can download from their releases page on github or install vía chocolatey package manager:
+**Note** Helm is used only to install the Nginx ingress controller. SmartHotel 360 registration itself is installed using [Kustomize](https://kustomize.io/).
 
-```$ choco install kubernetes-helm```
+Please refer to [Helm installation page](https://github.com/helm/helm#install) to get the instructions on how get Helm for your system.
 
-After that you can install helm going to the folder ```Deploy\k8s``` and type this commands:
+After that you can install helm going to the folder `Deploy\k8s` and type this commands:
 
-```$ kubectl apply -f tiller-rbac.yaml```
-this registrates tiller account and role for working in the cluster and :
-```$ helm init --node-selectors "beta.kubernetes.io/os"="linux" --service-account tiller ```
+```bash
+$ kubectl apply -f tiller-rbac.yaml
+$ helm init --node-selectors "beta.kubernetes.io/os"="linux" --service-account tiller
+```
 
 This installs helm on the cluster, in the linux nodes (helm pods are linux pods, you have to install this tooling in the linux nodes).
 
 Now it's time to setup the ingress controller. This controller has the responsability of route the traffic to the appropiate pod, you can setup this doing:
 
-```
+```bash
 helm install stable/nginx-ingress \ 
     --name smgateway \
     --namespace kube-system \
@@ -227,15 +258,42 @@ helm install stable/nginx-ingress \
     --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux  \
     --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux
 ```
-    
 
-Once time you have completed this stage, you can install the application executing the powershell script:
+To ensure the Nginx ingress controller is running you can type `kubectl get pods -n kube-system -l app=nginx-ingress` and check the nginx ingress controller pods are running:
 
-```> deploy.ps1 -dnsname yourawesomednsname```
+![Nginx controller pods](./Documents/Images/get-pods-nginx.png)
 
->Note there is a parameter call ```dnsname```, this is the dns name of your aks cluster. With this script it associates the dns name to the nginx/ingress controller, if you dont pass a value to this parameter, or you don't setup, it will try to register the dnsname _smhotel360win_
+### Deploy the Application
+
+Once time you have completed this stage, you can install the application executing the powershell script `deploy.ps1`. When installing the app you must pass the `dnsname` parameter. 
+
+This accepts the following parameters:
+
+ * `dnsname`: The DNS name to use to access your application. If the DNS contains any dot character it is considered a fully-qualified domain name (FQDN). If `dnsname` do not contain any dot is considered a subdomain name.
+
+If `dnsname` is set to a FQDN you can enable SSL on the cluster. Following parameters are needed when enabling SSL:
+
+* `tlsCertFile`: Name of the certificate file (PEM) that contains the TLS certificate. If not passed SSL is not enabled
+* `tlsKeyFile`: Name of the private key file of the certificate. Must be unencrypted (with no password).
+* `tlsSecretName`: Kubernetes secret name where TLS certificate will be stored. Defaults to `sh360-reg-tls`.
+
+**Important**: If the parameter `dnsname` is a subdomain the script will auto-configure the public ip of the ingress controller to ensure it has the subdomain applied. But if the parameter `dnsname` is a FQDN the script assumes that the public IP is already configured.
+
+Once script is finished, the SmartHotel registration is installed. A `kubectl get pods` should list the three pods:
 
 ![pods working](Documents/Images/pods_working.png)
+
+### Accessing the Application
+
+The ingress is configured to the domain you passed in the `dnsname` parameter of the `deploy.ps1` script. If `dnsname` where a domain, the full domain is `$dnsname.<region>.cloudapp.azure.com`. The full DNS is output by the `deploy.ps1` script:
+
+![Output of the deploy.ps1 script when subdomain is used](./Documents/Images/deploy-output-subdomain.png)
+
+Another way to find the domain configured is by `kubectl get ing`. This will show the ingress resource alongside its full domain name:
+
+![Output of kubectl get ing](Documents/Images/get-ing.png)
+
+If you navigate to this URL the web should appear.
 
 ## Summary
 Docker and Azure Kubernetes Service allow us to deploy Full Framework applications and bring them to Azure providing all the benefits of the cloud such as reliability and scalability.

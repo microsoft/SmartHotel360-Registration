@@ -5,9 +5,13 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /
-spec:   
+spec: 
+  tls:
+  - hosts:
+    - registration.smarthotel360.com
+    secretName: sh360-reg-tls
   rules:
-  - host: smhotel360win.eastus.cloudapp.azure.com
+  - host: registration.smarthotel360.com
     http:
       paths:
       - path: /

@@ -5,7 +5,11 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /
-spec:   
+spec: 
+  tls:
+  - hosts:
+    - {{ApplicationHost}}
+    secretName: {{TlsSecretName}}
   rules:
   - host: {{ApplicationHost}}
     http:
