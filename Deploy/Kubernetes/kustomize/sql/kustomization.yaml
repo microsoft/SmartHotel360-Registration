@@ -1,7 +1,7 @@
 configMapGenerator:
 - name: sql-cm
   literals:
-  - sa_password=P@ssw0rd!
+  - sa_password=Azure2019!
   - ACCEPT_EULA=Y
 resources:
   - deployment.yaml

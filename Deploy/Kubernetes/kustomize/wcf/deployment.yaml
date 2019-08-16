@@ -1,18 +1,18 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: api
+  name: wcf
 spec:
   template:
     metadata:
       labels:
-        component: api
+        component: wcf
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": windows    
       containers:
-      - name: api
-        image: smarthotels/sh360reg-api:aks
+      - name: wcf
+        image: smarthotel360registration-wcf:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
@@ -20,10 +20,5 @@ spec:
           - name: DefaultConnection
             valueFrom:
               configMapKeyRef:
-                name: api-cm
+                name: wcf-cm
                 key: dbconnection
-          - name: UseStoreKPIsStatefulService
-            valueFrom:
-              configMapKeyRef:
-                name: api-cm
-                key: kpistateful
