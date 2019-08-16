@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Service" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:9001/Service.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:9001/Service.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:9001/Service.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/SmartHotel360.Registration.Wcf.Models" />
+      <xsd:import schemaLocation="http://localhost:9001/Service.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/SmartHotel360.Registration.Wcf.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IService_GetRegistrations_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRegistrations" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetRegistrations_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRegistrationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetTodayRegistrations_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTodayRegistrations" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetTodayRegistrations_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTodayRegistrationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetTodayRegistrationSummary_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTodayRegistrationSummary" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetTodayRegistrationSummary_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTodayRegistrationSummaryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetCheckin_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCheckin" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetCheckin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCheckinResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetCheckout_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCheckout" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetCheckout_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCheckoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_PostRegister_InputMessage">
+    <wsdl:part name="parameters" element="tns:PostRegister" />
+  </wsdl:message>
+  <wsdl:message name="IService_PostRegister_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PostRegisterResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IService">
+    <wsdl:operation name="GetRegistrations">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetRegistrations" message="tns:IService_GetRegistrations_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetRegistrationsResponse" message="tns:IService_GetRegistrations_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTodayRegistrations">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetTodayRegistrations" message="tns:IService_GetTodayRegistrations_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetTodayRegistrationsResponse" message="tns:IService_GetTodayRegistrations_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTodayRegistrationSummary">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetTodayRegistrationSummary" message="tns:IService_GetTodayRegistrationSummary_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetTodayRegistrationSummaryResponse" message="tns:IService_GetTodayRegistrationSummary_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCheckin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetCheckin" message="tns:IService_GetCheckin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetCheckinResponse" message="tns:IService_GetCheckin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCheckout">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetCheckout" message="tns:IService_GetCheckout_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetCheckoutResponse" message="tns:IService_GetCheckout_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PostRegister">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/PostRegister" message="tns:IService_PostRegister_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/PostRegisterResponse" message="tns:IService_PostRegister_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IService" type="tns:IService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetRegistrations">
+      <soap:operation soapAction="http://tempuri.org/IService/GetRegistrations" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTodayRegistrations">
+      <soap:operation soapAction="http://tempuri.org/IService/GetTodayRegistrations" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTodayRegistrationSummary">
+      <soap:operation soapAction="http://tempuri.org/IService/GetTodayRegistrationSummary" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCheckin">
+      <soap:operation soapAction="http://tempuri.org/IService/GetCheckin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCheckout">
+      <soap:operation soapAction="http://tempuri.org/IService/GetCheckout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostRegister">
+      <soap:operation soapAction="http://tempuri.org/IService/PostRegister" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:port name="BasicHttpBinding_IService" binding="tns:BasicHttpBinding_IService">
+      <soap:address location="http://localhost:9001/Service.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

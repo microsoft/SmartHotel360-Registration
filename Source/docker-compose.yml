@@ -3,26 +3,26 @@ version: '3.4'
 services:
 
   web:
-    image: ${REGISTRY:-smarthotels}/sh360reg-web:aks
+    image: smarthotel360registration-web:latest
     env_file:
      - .env
     ports:
-      - "5000:80"
+      - "9000:80"
     build:
-      context: ./SmartHotel.Registration.Web
+      context: ./SmartHotel360.Registration.Web
       dockerfile: Dockerfile    
       args:
         tag: ${wintag:-4.8-windowsservercore-ltsc2019}
     depends_on:
-      - api
-  api:
-    image: ${REGISTRY:-smarthotels}/sh360reg-api:aks
+      - wcf
+  wcf:
+    image: smarthotel360registration-wcf:latest
     env_file:
      - .env
     ports:
-      - "4001:80"
+      - "9001:80"
     build:
-      context: ./SmartHotel.Registration.Wcf
+      context: ./SmartHotel360.Registration.WCF
       dockerfile: Dockerfile    
       args:
         tag: ${wintag:-4.8-windowsservercore-ltsc2019}
@@ -34,4 +34,4 @@ services:
       - "1433:1433"
     environment:
       - ACCEPT_EULA=Y
-      - sa_password=P@ssw0rd!
+      - sa_password=Azure2019!

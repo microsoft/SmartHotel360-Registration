@@ -1,0 +1,7 @@
+commonLabels:
+  app: smarthotel360registration
+bases:
+- ./wcf
+- ./web
+- ./sql
+- ./ingress

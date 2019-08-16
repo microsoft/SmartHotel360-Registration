@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: smarthotel-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec: 
+  tls:
+  - hosts:
+    - smarthotel360registration.westus.cloudapp.azure.com
+    secretName: smarthotel360registration-tls
+  rules:
+  - host: smarthotel360registration.westus.cloudapp.azure.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: web
+          servicePort: 80
+      - path: /svc
+        backend:
+          serviceName: api
+          servicePort: 80
