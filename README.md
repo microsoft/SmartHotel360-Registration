@@ -4,7 +4,7 @@ The front desk at [SmartHotel360](https://github.com/Microsoft/SmartHotel360) us
 
 ![Website](Documents/Images/website.png)
 
-You can take a look at our live running website following this address: [http://smarthotel360registration.westus.cloudapp.azure.com](http://smarthotel360registration.westus.cloudapp.azure.com)  (Running on AKS)
+You can take a look at our live running website following this address: [https://registration.smarthotel360.com](https://registration.smarthotel360.com) (Running on AKS)
 
 ## Technical Information
 
@@ -216,17 +216,11 @@ We can install the application executing the powershell script **deploy.ps1**. W
 
 > Note: If `dnsname` is set to a FQDN you can enable SSL on the cluster. 
 
-Optionally if you want to enable SSL for HTTPS you will need to provide the following parameters:
+Optionally if you want to enable SSL for HTTPS you will need to provide the following parameters. You can use a tool like [**Let’s Encrypt**](https://letsencrypt.org) to create the certificate and the key.
 
 * `tlsCertFile`: Name of the certificate file (PEM) that contains the TLS certificate. If not passed SSL is not enabled
 * `tlsKeyFile`: Name of the private key file of the certificate. Must be unencrypted (with no password).
 * `tlsSecretName`: Kubernetes secret name where TLS certificate will be stored. Defaults to `smarthotel360registration-tls`.
-
-If you need to generate a new Certificate and Key you can use tools like OpenSSL and execute the following command:
-
-```
-openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
-```
 
 **Important**: If the parameter `dnsname` is a subdomain the script will auto-configure the public ip of the ingress controller to ensure it has the subdomain applied. But if the parameter `dnsname` is a FQDN the script assumes that the public IP is already configured. (You will need to setup the DNS record).
 

@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: web-cm
 data:
-  wcfurl: http://api/Service.svc
+  wcfurl: http://wcf/Service.svc
