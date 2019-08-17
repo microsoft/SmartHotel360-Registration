@@ -3,7 +3,7 @@ version: '3.4'
 services:
 
   web:
-    image: smarthotel360registration-web:latest
+    image: ${REGISTRY:-smarthotel360}/registrationwcf:latest
     env_file:
      - .env
     ports:
@@ -16,7 +16,7 @@ services:
     depends_on:
       - wcf
   wcf:
-    image: smarthotel360registration-wcf:latest
+    image: ${REGISTRY:-smarthotel360}/registrationweb:latest
     env_file:
      - .env
     ports:

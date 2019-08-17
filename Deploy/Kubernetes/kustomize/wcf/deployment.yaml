@@ -12,7 +12,7 @@ spec:
         "beta.kubernetes.io/os": windows    
       containers:
       - name: wcf
-        image: smarthotel360registration-wcf:latest
+        image: smarthotel360/registrationwcf:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80

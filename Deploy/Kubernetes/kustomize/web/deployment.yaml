@@ -12,7 +12,7 @@ spec:
         "beta.kubernetes.io/os": windows      
       containers:
       - name: web
-        image: smarthotel360registration-web:latest
+        image: smarthotel360/registrationweb:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80

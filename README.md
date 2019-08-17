@@ -208,21 +208,27 @@ kubectl get pods -n kube-system -l app=nginx-ingress
 
 8. Deploy the Application
 
-Now we can install the application executing the powershell script **deploy.ps1**. 
+> Note: by default for the deployment we use our public images available on [Docker Hub](https://hub.docker.com/u/smarthotel360), if you would like to change this, you just need to replace the value of the images for web and wcf services inside the **kustomize** folder.
 
-When installing the app you could pass the `dnsname` parameter. 
+We can install the application executing the powershell script **deploy.ps1**. When installing the app it is recommended to pass the `dnsname` parameter. 
 
-Optionally this accepts the following parameters:
+ * `dnsname`: The DNS name to use to access your application. If the DNS contains any dot character it is considered a fully-qualified domain name (FQDN). If `dnsname` do not contain any dot is considered a subdomain name. For example: registration.smarthotel360.com
 
- * `dnsname`: The DNS name to use to access your application. If the DNS contains any dot character it is considered a fully-qualified domain name (FQDN). If `dnsname` do not contain any dot is considered a subdomain name.
+> Note: If `dnsname` is set to a FQDN you can enable SSL on the cluster. 
 
-> Note: If `dnsname` is set to a FQDN you can enable SSL on the cluster. Following parameters are needed when enabling SSL:
+Optionally if you want to enable SSL for HTTPS you will need to provide the following parameters:
 
 * `tlsCertFile`: Name of the certificate file (PEM) that contains the TLS certificate. If not passed SSL is not enabled
 * `tlsKeyFile`: Name of the private key file of the certificate. Must be unencrypted (with no password).
-* `tlsSecretName`: Kubernetes secret name where TLS certificate will be stored. Defaults to `sh360-reg-tls`.
+* `tlsSecretName`: Kubernetes secret name where TLS certificate will be stored. Defaults to `smarthotel360registration-tls`.
 
-**Important**: If the parameter `dnsname` is a subdomain the script will auto-configure the public ip of the ingress controller to ensure it has the subdomain applied. But if the parameter `dnsname` is a FQDN the script assumes that the public IP is already configured.
+If you need to generate a new Certificate and Key you can use tools like OpenSSL and execute the following command:
+
+```
+openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
+```
+
+**Important**: If the parameter `dnsname` is a subdomain the script will auto-configure the public ip of the ingress controller to ensure it has the subdomain applied. But if the parameter `dnsname` is a FQDN the script assumes that the public IP is already configured. (You will need to setup the DNS record).
 
 Once script is finished, the SmartHotel registration is installed. The command
 ```
@@ -251,6 +257,8 @@ This will show the ingress resource alongside its full domain name:
 If you navigate to this URL the registration website should show up.
 
 ![Website](Documents/Images/website.png)
+
+If you face any issue feel free to [report it](https://github.com/microsoft/SmartHotel360-Registration/issues). 
 
 # Feedback
 [Help us improving this reference application by providing us your valuable opinion](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3KT2CyhiH1CpWtxmbmS23pUNVZKUDlPTVBJUU5aOUE5SFdMUkpNS1RGVCQlQCN0PWcu).
