@@ -17,6 +17,9 @@ You can take a look at our live running website following this address: [https:/
 We use Azure Pipelines in order to manage the CI/CD process of this application, you can take a look at the project:
 [![Build status](https://dev.azure.com/smarthotel360/Registration/_apis/build/status/Registration-CI)](https://dev.azure.com/smarthotel360/Registration/_build/latest?definitionId=38)
 
+> Note: the source code has pre-configured an existing [Azure Application Insight](https://docs.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview) to monitor the application, if you want to change or remove the `instrumentation key` just modify the 
+line 140 in the **ApplicationInsights.config** files.
+
 # Getting Started
 
 The following guide covers the step by step of how to run the two applications locally using Docker with Windows Containers and then how to deploy the solution to an Azure Kubernetes Service cluster with Windows Containers enabled.
