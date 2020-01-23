@@ -1,10 +1,12 @@
+# **The project SmartHotel360 have been retired, we have archived it. It is no longer maintained. You still can fork the repository.**
+
+## For the latest sample references visit: https://aka.ms/tailwindtraders & https://aka.ms/rpsls 
+
 # SmartHotel360 Registration - Sample Reference Application
 
 The front desk at [SmartHotel360](https://github.com/Microsoft/SmartHotel360) use the following application to register customers throught the check-in and check-out process. In the application we have the customer information, the operation to execute.
 
 ![Website](Documents/Images/website.png)
-
-You can take a look at our live running website following this address: [https://registration.smarthotel360.com](https://registration.smarthotel360.com) (Running on AKS)
 
 ## Technical Information
 
@@ -13,9 +15,6 @@ You can take a look at our live running website following this address: [https:/
 1. You can either run the website and the WCF locally, deploy those to Azure App Service or deploy the whole solution to Azure Kubernetes Services to the version 1.14.5 (in preview) or latest which support Windows Containers.
 
 ![Architecture Overview](Documents/Images/diagram.png)
-
-We use Azure Pipelines in order to manage the CI/CD process of this application, you can take a look at the project:
-[![Build status](https://dev.azure.com/smarthotel360/Registration/_apis/build/status/Registration-CI)](https://dev.azure.com/smarthotel360/Registration/_build/latest?definitionId=38)
 
 > Note: the source code has pre-configured an existing [Azure Application Insight](https://docs.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview) to monitor the application, if you want to change or remove the `instrumentation key` just modify the 
 line 140 in the **ApplicationInsights.config** files.
